@@ -14,6 +14,9 @@ import SocialScreen from "../screens/TeacherPannel/SocialScreen";
 import CogniticScreen from "../screens/TeacherPannel/CogniticScreen";
 import UnitScreen from "../screens/TeacherPannel/UnitScreen";
 import MessagesScreen from "../screens/TeacherPannel/MessagesScreen";
+import YourCurrentSchedule from "../screens/StudentPannel/CurrentSchedule";
+import TaskListScreen from "../screens/StudentPannel/TaskListScreen";
+import StudentMeassagesScreen from "../screens/StudentPannel/StudentMessagesScreen";
 const Stack = createStackNavigator();
 const MainStack = () => {
   return (
@@ -50,27 +53,6 @@ const MainStack = () => {
           headerShown: false,
         }}
         component={TeacherSignUpScreen}
-      />
-      <Stack.Screen
-        name="StudentLoginScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentLoginScreen}
-      />
-      <Stack.Screen
-        name="StudentSignUpScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentSignUpScreen}
-      />
-      <Stack.Screen
-        name="StudentHomeScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentHomeScreen}
       />
       <Stack.Screen
         name="TeacherHomeScreen"
@@ -124,6 +106,57 @@ const MainStack = () => {
           headerTitle: "Messages",
         }}
         component={MessagesScreen}
+      />
+      <Stack.Screen
+        name="StudentLoginScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={StudentLoginScreen}
+      />
+      <Stack.Screen
+        name="StudentSignUpScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={StudentSignUpScreen}
+      />
+      <Stack.Screen
+        name="StudentHomeScreen"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Home Screen",
+          headerLeft: null,
+        }}
+        component={StudentHomeScreen}
+      />
+      <Stack.Screen
+        name="YourCurrentSchedule"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Schedule Screen",
+        }}
+        component={YourCurrentSchedule}
+      />
+      <Stack.Screen
+        name="TaskListScreen"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Task List",
+        }}
+        component={TaskListScreen}
+      />
+      <Stack.Screen
+        name="StudentMassagesScreen"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Massages Screen",
+        }}
+        component={StudentMeassagesScreen}
       />
     </Stack.Navigator>
   );
