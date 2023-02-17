@@ -7,8 +7,11 @@ import {
   Dimensions,
   ScrollView,
   View,
+  AsyncStorage,
+  ToastAndroid,
+  Alert
 } from "react-native";
-import React from "react";
+import React,{useState,useEffect} from "react";
 import PrimaryButton from "../../components/PrimaryButton";
 ////responsive width height code ///
 import {
@@ -20,8 +23,34 @@ const screenHeight = Dimensions.get("window").height;
 ////responsive width height code ///
 import Colors from "../../../assets/theme/Colors";
 import * as Progress from "react-native-progress";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../../firebase.config";
 
 const SocialScreen = () => {
+  const[studentName,setStudentName]=useState('')
+  const[studentId,setStudentId]=useState('')
+
+  useEffect(()=>{
+    AsyncStorage.getItem('studentName').then((val)=>{
+      setStudentName(val)
+      AsyncStorage.getItem('studentId').then((val)=>{
+        setStudentId(val)
+      })
+    })
+  },[])
+
+  const AssignTask=(task)=>{
+    const dbref= collection(db,'IndividualTasks')
+    addDoc(dbref,{
+      studentName,
+      studentId,
+      task,
+      date: new Date().toDateString()
+    }).then(()=>{
+    Alert.alert('Task Assigned')
+    })
+
+  }
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -31,11 +60,11 @@ const SocialScreen = () => {
             { color: Colors.secondary, fontSize: 25, textAlign: "center" },
           ]}
         >
-          User Social Learning Participation Progress Report
+          {studentName} Social Learning Participation Progress Report
         </Text>
         <View style={styles.mainView}>
           <View style={styles.textView}>
-            <Text style={styles.HeadingTextStyle}>user Participation</Text>
+            <Text style={styles.HeadingTextStyle}>{studentName} Participation</Text>
           </View>
 
           <Progress.Pie
@@ -48,9 +77,9 @@ const SocialScreen = () => {
         </View>
         <View style={styles.secondView}>
           <Text style={[styles.HeadingTextStyle, { color: Colors.secondary }]}>
-            Assign New Task for User
+            Assign New Task for {studentName}
           </Text>
-          <PrimaryButton title={"Assign"} width={wp("25%")} />
+          <PrimaryButton onPress={()=>{AssignTask('newTask')}} title={"Assign"} width={wp("30%")} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -80,7 +109,8 @@ const styles = StyleSheet.create({
   },
   HeadingTextStyle: {
     color: Colors.textColor,
-    fontSize: 20,
+    fontSize: 16,
+    textAlign:'center',
     fontWeight: "bold",
     alignSelf: "center",
     marginTop: hp("1%"),

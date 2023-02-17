@@ -7,8 +7,9 @@ import {
   Dimensions,
   ScrollView,
   View,
+  AsyncStorage,
 } from "react-native";
-import React from "react";
+import React, { useEffect,useState } from "react";
 import PrimaryButton from "../../components/PrimaryButton";
 ////responsive width height code ///
 import {
@@ -21,6 +22,14 @@ const screenHeight = Dimensions.get("window").height;
 import Colors from "../../../assets/theme/Colors";
 import * as Progress from "react-native-progress";
 const LearningScreen = () => {
+  const[studentName,setStudentName]=useState('')
+
+  useEffect(()=>{
+    AsyncStorage.getItem('studentName').then((val)=>{
+      console.log(val)
+      setStudentName(val)
+    })
+  },[])
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -30,7 +39,7 @@ const LearningScreen = () => {
             { color: Colors.secondary, fontSize: 30 },
           ]}
         >
-          User Cognitive Learning
+          {studentName} Cognitive Learning
         </Text>
         <View style={styles.mainView}>
           <View style={styles.textView}>
