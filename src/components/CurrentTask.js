@@ -1,8 +1,5 @@
 /** @format */
 
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { auth, db } from "../../../firebase.config";
-/**FireBase */
 import {
   StyleSheet,
   Text,
@@ -12,11 +9,15 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
-  FlatList,
+  TouchableOpacity,
+  Alert,
+  TextInput,
+  Image,
+  Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import Colors from "../../../assets/theme/Colors";
-import PrimaryButton from "../../components/PrimaryButton";
+import Colors from "../../assets/theme/Colors";
+import PrimaryButton from "../components/PrimaryButton";
 import { Feather } from "@expo/vector-icons";
 import * as Progress from "react-native-progress";
 
@@ -25,58 +26,48 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import CurrentTask from "../../components/CurrentTask";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
-
-const YourCurrentSchedule = ({ navigation }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [user, setUser] = useState("");
-  console.log("Taskkkkkkkkkkkkkkkkk", user);
-  //////Messages Data///////
-  const TaskList = async () => {
-    const q = query(
-      collection(db, "IndividualTasks"),
-      where("studentId", "==", auth.currentUser.uid)
-    );
-    const querySnapshot = await getDocs(q);
-    let TaskList = [];
-    querySnapshot.forEach((doc) => {
-      console.log(doc.id, " => ", doc.data());
-
-      TaskList.push(doc.data());
-      setUser(TaskList);
-    });
-  };
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-      TaskList();
-    }, 5000);
-  }, []);
+////responsive width height code ///
+import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
+const YourCurrentSchedule = ({ onPress, item }) => {
+  const navigation = useNavigation();
+  function openUrl() {
+    Linking.openURL("https://zoom.us/");
+  }
   return (
     <SafeAreaView>
-      {user ? (
-        <SafeAreaView style={{ marginTop: "5%" }}>
-          <FlatList
-            data={user}
-            renderItem={({ item }) => (
-              <CurrentTask
-                item={item}
-                onPress={() => navigation.navigate("TaskListScreen", item)}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "position"}
+      >
+        <View style={styles.SecondView}>
+          <View style={[styles.mainView, { marginTop: hp("2%") }]}>
+            <View style={styles.textView}>
+              <Text style={styles.HeadingTextStyle}>{item.task}</Text>
+            </View>
+            <PrimaryButton
+              title={"More Info"}
+              width={wp("20%")}
+              height={hp("5%")}
+              fontSize={12}
+              onPress={onPress}
+            />
+            <TouchableOpacity onPress={openUrl}>
+              <Image
+                style={{ width: 30, height: 30 }}
+                source={require("../../assets/zoom.png")}
               />
-            )}
-            keyExtractor={(item) => item.id}
-          />
-        </SafeAreaView>
-      ) : (
-        <ActivityIndicator
-          color={Colors.secondary}
-          size={"large"}
-          style={{ justifyContent: "center", marginTop: hp("40%") }}
-        />
-      )}
+            </TouchableOpacity>
+            <Progress.Pie
+              progress={0.7}
+              width={30}
+              color={Colors.secondary}
+              size={30}
+            />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -102,10 +93,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   SecondView: {
-    width: wp("98%"),
+    width: wp("95%"),
     height: hp("10%"),
     justifyContent: "center",
-    marginTop: hp("10%"),
+    marginTop: hp("2%"),
     // backgroundColor: "red",
     alignSelf: "center",
   },
@@ -140,8 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   textView: {
-    width: wp("25%"),
+    width: wp("40%"),
     justifyContent: "center",
-    backgroundColor: "red",
   },
 });

@@ -8,7 +8,6 @@ import {
   where,
   getDocs,
   onSnapshot,
-  
 } from "firebase/firestore";
 
 import { auth, db } from "../../../firebase.config";
@@ -28,7 +27,7 @@ import {
   TextInput,
   Modal,
   FlatList,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Colors from "../../../assets/theme/Colors";
@@ -51,23 +50,22 @@ const TeacherHomeScreen = ({ navigation }) => {
   const [user, setUser] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [search, setSearch] = useState();
-  const[data,setData]=useState('')
-const[filterData,setFilterData]=useState('')
-  const getStudents=()=>{
-    const newData=[]
-    const dbref= collection(db,'studentsData')
-    getDocs(dbref).then((docs)=>{
-      docs.docs.map((doc)=>{
-newData.push(doc.data())
-      })
-    })
-    setData(newData)
+  const [data, setData] = useState("");
+  const [filterData, setFilterData] = useState("");
+  const getStudents = () => {
+    const newData = [];
+    const dbref = collection(db, "studentsData");
+    getDocs(dbref).then((docs) => {
+      docs.docs.map((doc) => {
+        newData.push(doc.data());
+      });
+    });
+    setData(newData);
     setFilterData(newData);
-  
-  }
-  useEffect(()=>{
-    getStudents()
-  },[])
+  };
+  useEffect(() => {
+    getStudents();
+  }, []);
   /////UserName From Firebase/////
   const profileData = async () => {
     const docRef = doc(db, "users", auth.currentUser.uid);
@@ -75,11 +73,11 @@ newData.push(doc.data())
     const docSnap = await getDoc(docRef);
     if (docSnap.exists) {
       setUser(docSnap.data());
-      AsyncStorage.setItem('TeacherName',docSnap.data().name).then(()=>{
-        AsyncStorage.setItem('TeacherSubject',docSnap.data().subjectName)
+      AsyncStorage.setItem("TeacherName", docSnap.data().name).then(() => {
+        AsyncStorage.setItem("TeacherSubject", docSnap.data().subjectName);
 
         console.log("datatatata====================", docSnap.data());
-      })
+      });
     }
   };
   /////UserName From Firebase/////
@@ -90,7 +88,7 @@ newData.push(doc.data())
 
   // const [data, setData] = useState([]);
   // const [filterData, setFilterData] = useState([]);
- 
+
   // useEffect(() => {
   //   const getData = async () => {
   //     const usersCollection = await firestore()
@@ -126,16 +124,15 @@ newData.push(doc.data())
       setSearch(filter);
     }
   };
-  const setStudentDetails=(item)=>{
-    const studentName= item.name
-    const studentId= item.uid
-    AsyncStorage.setItem('studentName',studentName).then(()=>{
-      AsyncStorage.setItem('studentId',studentId).then(()=>{
-        setModalVisible(!modalVisible)
-      })
-          })
-    
-  }
+  const setStudentDetails = (item) => {
+    const studentName = item.name;
+    const studentId = item.uid;
+    AsyncStorage.setItem("studentName", studentName).then(() => {
+      AsyncStorage.setItem("studentId", studentId).then(() => {
+        setModalVisible(!modalVisible);
+      });
+    });
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -176,103 +173,100 @@ newData.push(doc.data())
       .catch((error) => {});
   };
 
-
-  const ModalScreen=()=>{
-    return(
+  const ModalScreen = () => {
+    return (
       <View style={styles.centeredView}>
-
-      <Modal
-      animationType="slide"
-      transparent={true}
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}
-      >
-<View style={styles.centeredView}>
-<View style={styles.modalView}>
-      <View
-      style={[
-        styles.SecondView,
-        {
-          // backgroundColor: "red",
-          width:wp('75%'),
-          
-        },
-      ]}
-    >
-      <View style={styles.mainView}>
-        <View style={styles.textView}>
-          <Text style={styles.HeadingTextStyle}>Learning</Text>
-        </View>
-        <PrimaryButton
-          title={"More Info"}
-          width={wp("30%")}
-          height={hp("6%")}
-          onPress={() => {navigation.navigate("LearningScreen")
-          setModalVisible(!modalVisible)  
-        }}
-        />
-        <Progress.Pie
-          progress={0.7}
-          width={50}
-          color={Colors.secondary}
-        />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <View
+                style={[
+                  styles.SecondView,
+                  {
+                    // backgroundColor: "red",
+                    width: wp("75%"),
+                  },
+                ]}
+              >
+                <View style={styles.mainView}>
+                  <View style={styles.textView}>
+                    <Text style={styles.HeadingTextStyle}>Learning</Text>
+                  </View>
+                  <PrimaryButton
+                    title={"More Info"}
+                    width={wp("30%")}
+                    height={hp("6%")}
+                    onPress={() => {
+                      navigation.navigate("LearningScreen");
+                      setModalVisible(!modalVisible);
+                    }}
+                  />
+                  <Progress.Pie
+                    progress={0.7}
+                    width={50}
+                    color={Colors.secondary}
+                  />
+                </View>
+                <View style={[styles.mainView, { marginTop: hp("2%") }]}>
+                  <View style={styles.textView}>
+                    <Text style={styles.HeadingTextStyle}>Social</Text>
+                  </View>
+                  <PrimaryButton
+                    title={"More Info"}
+                    width={wp("30%")}
+                    height={hp("6%")}
+                    onPress={() => {
+                      navigation.navigate("SocialScreen");
+                      setModalVisible(!modalVisible);
+                    }}
+                  />
+                  <Progress.Pie
+                    progress={0.5}
+                    width={50}
+                    color={Colors.secondary}
+                  />
+                </View>
+                <View style={[styles.mainView, { marginTop: hp("2%") }]}>
+                  <View style={styles.textView}>
+                    <Text style={styles.HeadingTextStyle}>Cognitic</Text>
+                  </View>
+                  <PrimaryButton
+                    title={"More Info"}
+                    onPress={() => {
+                      navigation.navigate("CogniticScreen");
+                      setModalVisible(!modalVisible);
+                    }}
+                    width={wp("30%")}
+                    height={hp("6%")}
+                  />
+                  <Progress.Pie
+                    progress={0.9}
+                    width={50}
+                    color={Colors.secondary}
+                  />
+                </View>
+              </View>
+              <PrimaryButton
+                title={"Close"}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+                width={wp("30%")}
+                height={hp("6%")}
+              />
+            </View>
+          </View>
+        </Modal>
       </View>
-      <View style={[styles.mainView, { marginTop: hp("2%") }]}>
-        <View style={styles.textView}>
-          <Text style={styles.HeadingTextStyle}>Social</Text>
-        </View>
-        <PrimaryButton
-          title={"More Info"}
-          width={wp("30%")}
-          height={hp("6%")}
-          onPress={() => {navigation.navigate("SocialScreen")
-          setModalVisible(!modalVisible)
-        }}
-        />
-        <Progress.Pie
-          progress={0.5}
-          width={50}
-          color={Colors.secondary}
-        />
-      </View>
-      <View style={[styles.mainView, { marginTop: hp("2%") }]}>
-        <View style={styles.textView}>
-          <Text style={styles.HeadingTextStyle}>Cognitic</Text>
-        </View>
-        <PrimaryButton
-          title={"More Info"}
-          onPress={() =>{
-            navigation.navigate("CogniticScreen")
-            setModalVisible(!modalVisible)
-          }
-          } 
-          width={wp("30%")}
-          height={hp("6%")}
-        />
-        <Progress.Pie
-          progress={0.9}
-          width={50}
-          color={Colors.secondary}
-        />
-      </View>
-      
-    </View>
-    <PrimaryButton
-          title={"Close"}
-          onPress={() => {setModalVisible(!modalVisible)}}
-          width={wp("30%")}
-          height={hp("6%")}
-
-        />
-
-</View>
-</View>
-      </Modal>
-      </View>
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView>
@@ -340,33 +334,45 @@ newData.push(doc.data())
                 placeholder="Search"
                 placeholderTextColor={Colors.secondary}
                 style={styles.textInputStyle}
-                 value={search}
-                 onChangeText={(value) => searchName(value.toLowerCase())}
+                value={search}
+                onChangeText={(value) => searchName(value.toLowerCase())}
               />
             </View>
             <View style={styles.studentsListView}>
-              {
-              modalVisible ?  <ModalScreen/>
-:
-<View>
-  <FlatList
-  data={filterData}
-  renderItem={({item})=>{
-    return(
-      <TouchableOpacity onPress={()=>{setStudentDetails(item)}}>
-        <Text style={{fontSize:18, fontWeight:'bold',color:Colors.secondary}}>{item.name}</Text>
-      </TouchableOpacity>
-    )
-  }}
-  keyExtractor={(item)=>{return item.uid}}
-  />
-  </View>                
-              }
-          
-            
+              {modalVisible ? (
+                <ModalScreen />
+              ) : (
+                <View>
+                  <FlatList
+                    data={filterData}
+                    renderItem={({ item }) => {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setStudentDetails(item);
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 18,
+                              fontWeight: "bold",
+                              color: Colors.secondary,
+                            }}
+                          >
+                            {item.name}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    }}
+                    keyExtractor={(item) => {
+                      return item.uid;
+                    }}
+                  />
+                </View>
+              )}
             </View>
             {/* {filterData == "" ? ( */}
-           
+
             {/* ) : null} */}
           </View>
         </ScrollView>
@@ -436,17 +442,17 @@ const styles = StyleSheet.create({
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     margin: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -455,12 +461,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  studentsListView:{
-    margin:10,
-    padding:10,
-    borderBottomWidth:1,
+  studentsListView: {
+    margin: 10,
+    padding: 10,
+    borderBottomWidth: 1,
     borderColor: Colors.secondary,
-
-  }
+  },
 });
-

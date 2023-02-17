@@ -10,12 +10,12 @@ import IndividualRecievedMessagesScreen from "../screens/StudentPannel/Individua
 import Colors from "../../assets/theme/Colors";
 import IndividualStudentMessagesScreen from "../screens/StudentPannel/IndividualChats";
 import StudentMessagesScreen from "../screens/StudentPannel/StudentMessagesScreen";
-
+import YourCurrentSchedule from "../screens/StudentPannel/CurrentSchedule";
+import TaskListScreen from "../screens/StudentPannel/TaskListScreen";
 const Stack = createStackNavigator();
 const StudentStack = () => {
   return (
     <Stack.Navigator
-     
       screenOptions={{
         headerStyle: {
           backgroundColor: Colors.secondary,
@@ -27,7 +27,6 @@ const StudentStack = () => {
         },
       }}
     >
-     
       <Stack.Screen
         name="StudentLoginScreen"
         options={{
@@ -77,7 +76,23 @@ const StudentStack = () => {
         }}
         component={StudentMessagesScreen}
       />
-    
+      <Stack.Screen
+        name="YourCurrentSchedule"
+        options={{
+          headerShown: true,
+          headerTitle: "Current Schedule",
+        }}
+        component={YourCurrentSchedule}
+      />
+      <Stack.Screen
+        name="TaskListScreen"
+        options={{
+          headerShown: true,
+          headerTitle: "Task List",
+          headerTitleAlign: "center",
+        }}
+        component={TaskListScreen}
+      />
     </Stack.Navigator>
   );
 };
