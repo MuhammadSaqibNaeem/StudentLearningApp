@@ -1,19 +1,13 @@
 /** @format */
 import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import TeacherLoginScreen from "../screens/TeacherPannel/auth/LoginScreen";
-import TeacherSignUpScreen from "../screens/TeacherPannel/auth/RegisterScreen";
-import StudentLoginScreen from "../screens/StudentPannel/auth/LoginScreen";
-import StudentSignUpScreen from "../screens/StudentPannel/auth/RegisterScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import StudentHomeScreen from "../screens/StudentPannel/HomeScreen";
-import TeacherHomeScreen from "../screens/TeacherPannel/TeacherHomeScreen";
+
 import Colors from "../../assets/theme/Colors";
-import LearningScreen from "../screens/TeacherPannel/LearningScreen";
-import SocialScreen from "../screens/TeacherPannel/SocialScreen";
-import CogniticScreen from "../screens/TeacherPannel/CogniticScreen";
-import UnitScreen from "../screens/TeacherPannel/UnitScreen";
-import MessagesScreen from "../screens/TeacherPannel/MessagesScreen";
+
+import TeacherMainStack from "./TeacherStack";
+import StudentStack from "./StudentStack";
+import WelcomeScreen from "../screens/WelcomeScreen";
+
 const Stack = createStackNavigator();
 const MainStack = () => {
   return (
@@ -38,81 +32,22 @@ const MainStack = () => {
         component={WelcomeScreen}
       />
       <Stack.Screen
-        name="TeacherLoginScreen"
+        name="TeacherMainStack"
         options={{
           headerShown: false,
         }}
-        component={TeacherLoginScreen}
+        component={TeacherMainStack}
       />
       <Stack.Screen
-        name="TeacherSignUpScreen"
+        name="StudentStack"
         options={{
           headerShown: false,
         }}
-        component={TeacherSignUpScreen}
+        component={StudentStack}
       />
-      <Stack.Screen
-        name="TeacherHomeScreen"
-        options={{
-          headerShown: true,
-          headerTitle: "Teacher Home Screen",
-          headerTintColor: Colors.secondary,
-          headerTitleAlign: "center",
-          headerLeft: null,
-        }}
-        component={TeacherHomeScreen}
-      />
-      <Stack.Screen
-        name="LearningScreen"
-        options={{
-          headerShown: true,
-          headerTitle: "Student Learning Progress",
-        }}
-        component={LearningScreen}
-      />
-      <Stack.Screen
-        name="SocialScreen"
-        options={{
-          headerShown: true,
-          headerTitle: "Student Social Progress",
-        }}
-        component={SocialScreen}
-      />
-      <Stack.Screen
-        name="CogniticScreen"
-        options={{
-          headerShown: true,
-          headerTitle: "Student Cognitic Progress",
-        }}
-        component={CogniticScreen}
-      />
-      <Stack.Screen
-        name="UnitScreen"
-        options={{
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitle: "Unit Screen",
-        }}
-        component={UnitScreen}
-      />
-      <Stack.Screen
-        name="MessagesScreen"
-        options={{
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitle: "Messages",
-        }}
-        component={MessagesScreen}
-      />
-      <Stack.Screen
-        name="Recieved Chats"
-        options={{
-          headerShown: true,
-          headerTitleAlign: "center",
-          headerTitle: "Messages",
-        }}
-        component={RecievedCommunication}
-      />
+      
+    
+      
     </Stack.Navigator>
   );
 };

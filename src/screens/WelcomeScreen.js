@@ -29,9 +29,9 @@ const WelcomeScreen = ({ navigation }) => {
 
   const AccountType = () => {
     if (accountType == "Teacher") {
-      navigation.navigate("TeacherLoginScreen");
+      navigation.navigate("TeacherMainStack");
     } else if (accountType == "Student") {
-      navigation.navigate("StudentLoginScreen");
+      navigation.navigate("StudentStack");
     } else {
       Alert.alert("Please Chose Your Account Type");
     }
