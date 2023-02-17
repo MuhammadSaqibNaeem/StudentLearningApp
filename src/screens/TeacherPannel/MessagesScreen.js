@@ -2,7 +2,7 @@
 
 /** @format */
 
-import { StyleSheet, Text, View, Image,TouchableOpacity, ToastAndroid, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, Image,TouchableOpacity, ToastAndroid, ActivityIndicator, Alert,AsyncStorage } from "react-native";
 import React,{useEffect, useState} from "react";
 import {
   widthPercentageToDP as wp,
@@ -19,55 +19,41 @@ import PrimaryButton from "../../components/PrimaryButton";
 
 const MessagesScreen = ({ navigation }) => {
   const[message,setMessage]=useState('');
-  const[name,setName]=useState('')
-  const[studentName,setStudentName]=useState('')
-  const[userId,setUserId]=useState('')
+
+  const[teacherName,setTeacherName]=useState('')
+  const[teacherSubject,setTeacherSubject]=useState('')
   const[loading,setLoading]=useState(false)
   useEffect(()=>{
-    const id= auth.currentUser.uid;
-    setUserId(id)
-    getUserDetails()
-    console.log(userId)
+    AsyncStorage.getItem('TeacherName').then((val)=>{
+      setTeacherName(val)
+      AsyncStorage.getItem('TeacherSubject').then((val)=>{
+        setTeacherSubject(val)
+      })
+    })
     
   
-  },[userId])
+  },[])
   
-const getUserDetails=()=>{
-  // const id= auth.currentUser.uid;
-  //   setUserId(id)
-  //   console.log(userId)
-    const docref=collection(db, "Parents")
-    getDocs(query(docref,where ("uid",'==',userId))).then((docsnap)=>{
-      docsnap.docs.map((doc)=>{
-        console.log(doc.data())
-      setName(doc.data().fullName)  
-      setStudentName(doc.data(). studentName)
-      console.log('student' + studentName +" " + name)
-      })
-      })
-}
+
  
   const sendMessage=async()=>{
     
-  if(name){
+  
     const date= new Date().toDateString()
     console.log(date)
-    addDoc(collection(db, "ParentTeacherCommunication"), {
+    addDoc(collection(db, "AllMessages"), {
     message,
     sendDate: date,
-    recievedDate:'',
-    recieverName:'',
-    reply: '' ,
-    status:'unread',
-    parentName: name,
-    studentName,
-    parentId: userId
+    teacherName,
+    subject: teacherSubject,
+    type: 'all',
+    senderId: auth.currentUser.uid
     }).then(()=>{
       setLoading(false)
       setMessage('')
-     ToastAndroid.show('Message Sent',ToastAndroid.SHORT)
+    Alert.alert('Message Sent To All')
     });
-  }
+  
   
     
   }
@@ -94,7 +80,7 @@ const getUserDetails=()=>{
             text={"Message"}
             placeholder={"Enter Your Message"}
             borderWidth={2}
-          padding={5}
+          padding={10}
             height={hp("12%")}
             textAlignVertical={"top"}
             borderRadius={16}

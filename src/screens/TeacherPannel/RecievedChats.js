@@ -17,9 +17,7 @@
    heightPercentageToDP as hp,
  } from "react-native-responsive-screen";
 
- import { Colors } from "../../../assets/theme/Colors";
- import PrimaryButton from "../../components/PrimaryButton";
- import TextInputCom from "../../components/TextInputCom";
+
  import {
    collection,
    getDocs,
@@ -30,11 +28,13 @@
    getDoc,
  } from "firebase/firestore";
  import { auth, db } from "../../../firebase.config";
- import { async } from "@firebase/util";
+
+import PrimaryButton from "../../components/PrimaryButton";
+import TextInputCom from "../../components/TextInputCom"; 
+import Colors from "../../../assets/theme/Colors";
  const RecievedCommunication = ({ navigation, route }) => {
    const ref = useRef();
-   const { mydata } = route.params;
-   console.log(mydata);
+  
    const [data, setData] = useState("");
    const [reply, setReply] = useState({});
    const [name, setName] = useState("");

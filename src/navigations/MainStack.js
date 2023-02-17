@@ -127,7 +127,7 @@ const MainStack = () => {
         component={MessagesScreen}
       />
       <Stack.Screen
-        name="Recieved Chats"
+        name="RecievedChats"
         options={{
           headerShown: true,
           headerTitleAlign: "center",
