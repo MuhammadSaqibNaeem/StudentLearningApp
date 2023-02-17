@@ -14,7 +14,6 @@ import SocialScreen from "../screens/TeacherPannel/SocialScreen";
 import CogniticScreen from "../screens/TeacherPannel/CogniticScreen";
 import UnitScreen from "../screens/TeacherPannel/UnitScreen";
 import MessagesScreen from "../screens/TeacherPannel/MessagesScreen";
-import RecievedCommunication from "../screens/TeacherPannel/RecievedChats";
 const Stack = createStackNavigator();
 const MainStack = () => {
   return (
@@ -51,27 +50,6 @@ const MainStack = () => {
           headerShown: false,
         }}
         component={TeacherSignUpScreen}
-      />
-      <Stack.Screen
-        name="StudentLoginScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentLoginScreen}
-      />
-      <Stack.Screen
-        name="StudentSignUpScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentSignUpScreen}
-      />
-      <Stack.Screen
-        name="StudentHomeScreen"
-        options={{
-          headerShown: false,
-        }}
-        component={StudentHomeScreen}
       />
       <Stack.Screen
         name="TeacherHomeScreen"
@@ -127,7 +105,7 @@ const MainStack = () => {
         component={MessagesScreen}
       />
       <Stack.Screen
-        name="RecievedChats"
+        name="Recieved Chats"
         options={{
           headerShown: true,
           headerTitleAlign: "center",
