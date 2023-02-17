@@ -14,6 +14,7 @@ import SocialScreen from "../screens/TeacherPannel/SocialScreen";
 import CogniticScreen from "../screens/TeacherPannel/CogniticScreen";
 import UnitScreen from "../screens/TeacherPannel/UnitScreen";
 import MessagesScreen from "../screens/TeacherPannel/MessagesScreen";
+import RecievedCommunication from "../screens/TeacherPannel/RecievedChats";
 const Stack = createStackNavigator();
 const MainStack = () => {
   return (
@@ -124,6 +125,15 @@ const MainStack = () => {
           headerTitle: "Messages",
         }}
         component={MessagesScreen}
+      />
+      <Stack.Screen
+        name="Recieved Chats"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Messages",
+        }}
+        component={RecievedCommunication}
       />
     </Stack.Navigator>
   );

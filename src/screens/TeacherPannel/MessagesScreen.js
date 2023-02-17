@@ -1,277 +1,180 @@
+
+
 /** @format */
 
-// /** @format */
+import { StyleSheet, Text, View, Image,TouchableOpacity, ToastAndroid, ActivityIndicator } from "react-native";
+import React,{useEffect, useState} from "react";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+ 
 
-// import {
-//   StyleSheet,
-//   Text,
-//   View,
-//   Image,
-//   FlatList,
-//   ToastAndroid,
-//   ActivityIndicator,
-// } from "react-native";
-// import React, { useEffect, useRef, useState } from "react";
-// import {
-//   widthPercentageToDP as wp,
-//   heightPercentageToDP as hp,
-// } from "react-native-responsive-screen";
 
-// import { Colors } from "../../../assets/theme/Colors";
-// import PrimaryButton from "../../components/PrimaryButton";
-// import TextInputCom from "../../components/TextInputCom";
-// import {
-//   collection,
-//   getDocs,
-//   query,
-//   where,
-//   addDoc,
-//   updateDoc,
-//   getDoc,
-// } from "firebase/firestore";
-// import { auth, db } from "../../../firebase.config";
-// import { async } from "@firebase/util";
-// const RecievedCommunication = ({ navigation, route }) => {
-//   const ref = useRef();
-//   const { mydata } = route.params;
-//   console.log(mydata);
-//   const [data, setData] = useState("");
-//   const [reply, setReply] = useState({});
-//   const [name, setName] = useState("");
+import TextInputCom from "../../components/TextInputCom"; 
+import { collection, getDocs,query, where,addDoc } from "firebase/firestore";
+import { auth, db } from "../../../firebase.config";
+import Colors from "../../../assets/theme/Colors";
+import PrimaryButton from "../../components/PrimaryButton";
 
-//   const [userId, setUserId] = useState("");
-//   const [recieverName, setRecieverName] = useState("");
-//   const [loading, setLoading] = useState(false);
-//   const onChangeText = (message, text) => {
-//     setReply((values) => ({
-//       [message]: text,
-//     }));
-//   };
-//   const checkMessages = async () => {
-//     const document = [];
-//     const userid = auth.currentUser.uid;
-//     const docref = collection(db, "ParentTeacherCommunication");
-//     const q = query(docref, where("status", "==", "unread"));
-//     getDocs(q).then((docsnap) => {
-//       docsnap.docs.map((doc) => {
-//         document.push(doc.data());
-//         setData(document);
-//       });
-//     });
-//   };
-//   useEffect(() => {
-//     checkMessages();
-//   }, []);
-//   const sendReply = (item, index) => {
-//     // console.log(item)
-//     const message = item.message;
-//     const parentId = item.parentId;
-//     const sendDate = item.sendDate;
-//     const myreply = reply[index];
-//     console.log("message was" + message);
-//     console.log("parentId was" + parentId);
-//     console.log("sendDate was" + sendDate);
-//     console.log("Reply is" + myreply);
-//     const userId = auth.currentUser.uid;
-//     const docref = collection(db, "ParentTeacherCommunication");
-//     const q1 = query(
-//       docref,
-//       where("message", "==", message),
-//       where("parentId", "==", parentId)
-//     );
-//     getDocs(q1)
-//       .then((c) => {
-//         c.docs.map((doc) => {
-//           if (doc.exists) {
-//             const recievedDate = new Date().toDateString();
-//             const status = "read";
-//             updateDoc(doc.ref, {
-//               reply: myreply,
-//               recieverName: mydata.fullName,
-//               recievedDate,
-//               status,
-//             }).then(() => {
-//               setReply("");
-//               setLoading(false);
-//               ToastAndroid.show("Reply Sent", ToastAndroid.SHORT);
-//             });
-//           }
-//         });
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-//   const RenderItem = ({ item, index }) => {
-//     return (
-//       <View style={styles.listViewContainer}>
-//         <View>
-//           <View style={{ flexDirection: "row" }}>
-//             <Text
-//               style={[
-//                 styles.messageText,
-//                 { alignSelf: "flex-end", marginRight: 5 },
-//               ]}
-//             >
-//               Parent Name:
-//             </Text>
-//             <Text style={[styles.messageText, { alignSelf: "flex-end" }]}>
-//               {item.parentName}
-//             </Text>
-//           </View>
-//         </View>
-//         <View style={styles.rightView}>
-//           <Text style={[styles.messageText, { alignSelf: "flex-end" }]}>
-//             {item.message}
-//           </Text>
-//           <Text style={{ fontSize: 12, alignSelf: "flex-end" }}>
-//             {" "}
-//             {item.sendDate}
-//           </Text>
-//         </View>
-//         <View style={styles.textInputMainView}>
-//           <View
-//             ref={ref}
-//             key={index}
-//             style={[styles.inputView, { top: hp("5%"), alignSelf: "center" }]}
-//           >
-//             <TextInputCom
-//               text={"Reply"}
-//               placeholder={"Enter Your Reply"}
-//               borderWidth={2}
-//               padding={5}
-//               height={hp("12%")}
-//               textAlignVertical={"top"}
-//               borderRadius={16}
-//               value={reply[index] || ""}
-//               onChangeText={(value) => onChangeText(index, value)}
-//             />
-//           </View>
-//           {loading && (
-//             <ActivityIndicator
-//               ref={ref}
-//               key={index}
-//               color={Colors.secondary}
-//               size={"large"}
-//             />
-//           )}
-//           <View style={{ top: hp("12%") }}>
-//             <PrimaryButton
-//               title={"Send Reply"}
-//               iconColor={Colors.background}
-//               onPress={() => {
-//                 setLoading(true);
-//                 sendReply(item, index);
-//               }}
-//             />
-//           </View>
-//         </View>
-//       </View>
-//     );
-//   };
-//   const KeyExtractor = (item) => {
-//     return item.id;
-//   };
-//   return (
-//     <View style={styles.container}>
-//       <Text style={[styles.textStyle, { bottom: hp("2%") }]}>
-//         Recieved Responses
-//       </Text>
-//       <View style={{ height: hp("80%") }}>
-//         <FlatList
-//           data={data}
-//           renderItem={RenderItem}
-//           keyExtractor={KeyExtractor}
-//           showsVerticalScrollIndicator={false}
-//         />
-//       </View>
-//     </View>
-//   );
-// };
-
-// export default RecievedCommunication;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     alignItems: "center",
-//     justifyContent: "center",
-//     backgroundColor: Colors.background,
-//   },
-//   textStyle: {
-//     alignContent: "center",
-//     justifyContent: "center",
-//     fontSize: 22,
-//     color: Colors.textColor,
-//     fontWeight: "bold",
-//   },
-//   textInputMainView: {
-//     width: wp("88%"),
-//     top: hp("5%"),
-//     height: hp("10%"),
-//     justifyContent: "space-around",
-//     alignItems: "center",
-//     marginBottom: 5,
-//   },
-
-//   inputView: {
-//     width: wp("100%"),
-//     height: hp("8%"),
-//     justifyContent: "center",
-//     alignItems: "center",
-//     marginVertical: 10,
-//   },
-//   Image: {
-//     width: 250,
-//     height: 150,
-//     bottom: hp("20%"),
-//   },
-//   listViewContainer: {
-//     width: wp("90%"),
-//     height: hp("50%"),
-//     borderWidth: 1,
-//     borderRadius: 15,
-//     marginTop: 10,
-//     marginBottom: 5,
-//     padding: 5,
-//     borderColor: Colors.secondary,
-//   },
-//   rightView: {
-//     padding: 10,
-//     marginBottom: 10,
-//     borderRadius: 20,
-//     top: hp("3%"),
-//     // width: wp('80%'),
-//     alignSelf: "flex-end",
-//     backgroundColor: Colors.secondary,
-//   },
-//   leftView: {
-//     padding: 10,
-//     marginTop: 10,
-//     borderRadius: 20,
-//     top: hp("3%"),
-//     alignSelf: "flex-start",
-//     backgroundColor: Colors.secondary,
-//   },
-//   messageText: {
-//     alignContent: "center",
-//     fontSize: 18,
-//     color: Colors.textColor,
-//     fontWeight: "700",
-//   },
-// });
-
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-
-const MessagesScreen = () => {
+const MessagesScreen = ({ navigation }) => {
+  const[message,setMessage]=useState('');
+  const[name,setName]=useState('')
+  const[studentName,setStudentName]=useState('')
+  const[userId,setUserId]=useState('')
+  const[loading,setLoading]=useState(false)
+  useEffect(()=>{
+    const id= auth.currentUser.uid;
+    setUserId(id)
+    getUserDetails()
+    console.log(userId)
+    
+  
+  },[userId])
+  
+const getUserDetails=()=>{
+  // const id= auth.currentUser.uid;
+  //   setUserId(id)
+  //   console.log(userId)
+    const docref=collection(db, "Parents")
+    getDocs(query(docref,where ("uid",'==',userId))).then((docsnap)=>{
+      docsnap.docs.map((doc)=>{
+        console.log(doc.data())
+      setName(doc.data().fullName)  
+      setStudentName(doc.data(). studentName)
+      console.log('student' + studentName +" " + name)
+      })
+      })
+}
+ 
+  const sendMessage=async()=>{
+    
+  if(name){
+    const date= new Date().toDateString()
+    console.log(date)
+    addDoc(collection(db, "ParentTeacherCommunication"), {
+    message,
+    sendDate: date,
+    recievedDate:'',
+    recieverName:'',
+    reply: '' ,
+    status:'unread',
+    parentName: name,
+    studentName,
+    parentId: userId
+    }).then(()=>{
+      setLoading(false)
+      setMessage('')
+     ToastAndroid.show('Message Sent',ToastAndroid.SHORT)
+    });
+  }
+  
+    
+  }
   return (
-    <View>
-      <Text>MesssagesScreen</Text>
+    <View style={styles.container}>
+       <Image
+        style={styles.Image}
+        source={require("../../../assets/logo.png")}
+      />
+     
+      <View style={styles.textInputMainView}>
+      {
+            loading &&
+              <ActivityIndicator
+              size={'small'}
+              color={Colors.secondary}
+              />
+            
+          }
+        <View style={[styles.inputView,{   top: hp('3%'),}]}>
+          <TextInputCom
+          numLines={5}
+          multiline={true}
+            text={"Message"}
+            placeholder={"Enter Your Message"}
+            borderWidth={2}
+          padding={5}
+            height={hp("12%")}
+            textAlignVertical={"top"}
+            borderRadius={16}
+            value={message}
+            onChangeText={(value) => setMessage(value)}
+          />
+        </View>
+
+        <View style={{ top: hp("8%") }}>
+       
+          <PrimaryButton
+            title={"Send To All"}
+            iconColor={Colors.background}
+           onPress={()=>{
+            setLoading(true)
+            sendMessage()}}
+          />
+         
+        <View style={{
+  top: hp("2%"),
+  alignItems:'center'
+}}>
+
+<TouchableOpacity
+
+  onPress={() => {
+    navigation.navigate("RecievedChats");
+  }}
+>
+  <Text
+    style={[
+      styles.textStyle,
+      { fontSize: 20, color: Colors.secondary },
+    ]}
+  >
+   View Individual Messages
+  </Text>
+</TouchableOpacity>
+        </View>
+        </View>
+
+      </View>
     </View>
   );
 };
 
 export default MessagesScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors.background,
+  },
+  textStyle: {
+    alignContent: "center",
+    justifyContent: "center",
+    fontSize: 22,
+    color: Colors.textColor,
+    fontWeight: "bold",
+  },
+  textInputMainView: {
+    width: wp("88%"),
+    height: hp("30%"),
+    justifyContent: "center",
+    alignItems: "center",
+    bottom:hp('10%')
+  },
+
+  inputView: {
+    width: wp("100%"),
+    height: hp("15%"),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  Image: {
+    width: 250,
+    height: 150,
+    bottom: hp("20%"),
+  },
+});
+
