@@ -8,6 +8,7 @@ function App() {
   LogBox.ignoreAllLogs();
   return (
     <View style={{ flex: 1 }}>
+      
       <StatusBar backgroundColor={Colors.secondary} barStyle="light-content" />
       <AppRout />
     </View>

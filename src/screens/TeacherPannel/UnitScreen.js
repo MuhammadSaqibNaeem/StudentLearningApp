@@ -7,6 +7,8 @@ import {
   SafeAreaView,
   ScrollView,
   Dimensions,
+  Alert,
+  AsyncStorage
 } from "react-native";
 import React, { useState, useEffect } from "react";
 ////responsive width height code ///
@@ -19,11 +21,64 @@ const screenHeight = Dimensions.get("window").height;
 import PrimaryButton from "../../components/PrimaryButton";
 import Colors from "../../../assets/theme/Colors";
 import TextInputCom from "../../components/TextInputCom";
+import { addDoc, collection, collectionGroup } from "firebase/firestore";
+import { auth, db } from "../../../firebase.config";
 ////responsive width height code ///
 const UnitScreen = () => {
   const [content, setContent] = useState(false);
   const [taskProject, setTaskProject] = useState(false);
   const [classrooms, setClassRooms] = useState(false);
+
+  const[studentName,setStudentName]=useState('')
+  const[studentId,setStudentId]=useState('')
+  const[teacherName,setTeacherName]=useState('')
+  const[teacherSubject,setTeacherSubject]=useState('')
+  const[classTime,setClassTime]=useState('')
+
+  useEffect(()=>{
+    AsyncStorage.getItem('studentName').then((val)=>{
+      setStudentName(val)
+      AsyncStorage.getItem('studentId').then((val)=>{
+        setStudentId(val)
+      })
+    })
+  },[])
+  const AssignTask=(task)=>{
+  
+    const dbref= collection(db,'IndividualTasks')
+    addDoc(dbref,{
+      studentName,
+      studentId,
+      task,
+      date: new Date().toDateString()
+    }).then(()=>{
+    Alert.alert('Task Assigned')
+    })
+
+  }
+  const createClassTime=()=>{
+    AsyncStorage.getItem('TeacherName').then((val)=>{
+setTeacherName(val)
+AsyncStorage.getItem('TeacherSubject').then((val)=>{
+  setTeacherSubject(val)
+}).then(()=>{
+  const dbref= collection(db,'ClassRooms')
+  addDoc(dbref,{
+    studentName,
+    studentId,
+    teacherName,
+    teacherId: auth.currentUser.uid,
+    subject:teacherSubject,
+    date: new Date().toDateString(),
+    classTime
+  }).then(()=>{
+  Alert.alert('Task Assigned')
+  })
+
+})
+    })
+
+  }
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -32,21 +87,33 @@ const UnitScreen = () => {
             <PrimaryButton
               title={"Content"}
               height={wp("20%")}
-              onPress={() => setContent(!content)}
+              onPress={() => {
+                setContent(true)
+                setTaskProject(false)
+                setClassRooms(false)
+              }}
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <PrimaryButton
               title={"Task/ Project"}
               height={wp("20%")}
-              onPress={() => setTaskProject(!taskProject)}
+              onPress={() => {
+                setContent(false)
+                setTaskProject(true)
+                setClassRooms(false)
+              }}
             />
           </View>
           <View style={{ marginTop: 10 }}>
             <PrimaryButton
               title={"Classrooms"}
               height={wp("20%")}
-              onPress={() => setClassRooms(!classrooms)}
+              onPress={() => {
+                setContent(false)
+                setTaskProject(false)
+                setClassRooms(true)
+              }}
             />
           </View>
         </View>
@@ -59,7 +126,7 @@ const UnitScreen = () => {
               >
                 Unit 3 Chapter 4
               </Text>
-              <PrimaryButton title={"Assign"} width={wp("25%")} />
+              <PrimaryButton onPress={()=>{AssignTask( 'Unit 3 Chapter 4')}} title={"Assign"} width={wp("25%")}  />
             </View>
             <View style={styles.secondView}>
               <Text
@@ -67,7 +134,7 @@ const UnitScreen = () => {
               >
                 Unit 3 Chapter 5
               </Text>
-              <PrimaryButton title={"Assign"} width={wp("25%")} />
+              <PrimaryButton  onPress={()=>{AssignTask('Unit 3 Chapter 5')}}  title={"Assign"} width={wp("25%")} />
             </View>
             <View style={styles.secondView}>
               <Text
@@ -75,7 +142,7 @@ const UnitScreen = () => {
               >
                 Assignment Chapter 4
               </Text>
-              <PrimaryButton title={"Assign"} width={wp("25%")} />
+              <PrimaryButton onPress={()=>{AssignTask( 'Assignment Chapter 4')}}  title={"Assign"} width={wp("25%")} />
             </View>
           </View>
         ) : taskProject == true ? (
@@ -87,7 +154,7 @@ const UnitScreen = () => {
               >
                 Task
               </Text>
-              <PrimaryButton title={"Assign"} width={wp("25%")} />
+              <PrimaryButton title={"Assign"} onPress={()=>{AssignTask( 'Project Task')}} width={wp("25%")} />
             </View>
           </View>
         ) : classrooms == true ? (
@@ -103,10 +170,11 @@ const UnitScreen = () => {
                   placeholder={"Enter Your Classroom Time"}
                   borderWidth={2}
                   borderRadius={16}
-                  //   onChangeText={(value) => setEmail(value)}
+                  value={classTime}
+                    onChangeText={(value) => setClassTime(value)}
                 />
               </View>
-              <PrimaryButton title={"Assign"} width={wp("25%")} />
+              <PrimaryButton onPress={()=>{createClassTime()}} title={"Create"} width={wp("25%")} />
             </View>
           </View>
         ) : null}
