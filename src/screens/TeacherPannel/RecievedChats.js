@@ -10,6 +10,7 @@
    FlatList,
    ToastAndroid,
    ActivityIndicator,
+   AsyncStorage,
  } from "react-native";
  import React, { useEffect, useRef, useState } from "react";
  import {
@@ -50,9 +51,9 @@ import Colors from "../../../assets/theme/Colors";
    const checkMessages = async () => {
      const document = [];
      const userid = auth.currentUser.uid;
-     const docref = collection(db, "ParentTeacherCommunication");
-     const q = query(docref, where("status", "==", "unread"));
-     getDocs(q).then((docsnap) => {
+     const docref = collection(db, "IndividualMessages");
+   //  const q = query(docref, where("status", "==", "unread"));
+     getDocs(docref).then((docsnap) => {
        docsnap.docs.map((doc) => {
          document.push(doc.data());
          setData(document);
@@ -62,22 +63,19 @@ import Colors from "../../../assets/theme/Colors";
    useEffect(() => {
      checkMessages();
    }, []);
-   const sendReply = (item, index) => {
+   const sendReply =async (item, index) => {
+    const recieverName= await AsyncStorage.getItem('TeacherName')
       console.log(item)
      const message = item.message;
-     const parentId = item.parentId;
+     const senderID = item.senderID;
      const sendDate = item.sendDate;
      const myreply = reply[index];
-     console.log("message was" + message);
-     console.log("parentId was" + parentId);
-     console.log("sendDate was" + sendDate);
-     console.log("Reply is" + myreply);
      const userId = auth.currentUser.uid;
-     const docref = collection(db, "ParentTeacherCommunication");
+     const docref = collection(db, "IndividualMessages");
      const q1 = query(
        docref,
        where("message", "==", message),
-       where("parentId", "==", parentId)
+       where("senderID", "==", senderID)
      );
      getDocs(q1)
        .then((c) => {
@@ -87,9 +85,9 @@ import Colors from "../../../assets/theme/Colors";
              const status = "read";
              updateDoc(doc.ref, {
                reply: myreply,
-               recieverName: mydata.fullName,
+               recieverName,
                recievedDate,
-               status,
+               
              }).then(() => {
                setReply("");
                setLoading(false);
@@ -113,10 +111,10 @@ import Colors from "../../../assets/theme/Colors";
                  { alignSelf: "flex-end", marginRight: 5 },
                ]}
              >
-               Parent Name:
+               Student Name:
              </Text>
              <Text style={[styles.messageText, { alignSelf: "flex-end" }]}>
-               {item.parentName}
+               {item.senderName}
              </Text>
            </View>
          </View>

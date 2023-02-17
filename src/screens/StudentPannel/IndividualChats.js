@@ -16,26 +16,38 @@ import { collection, getDocs,query, where,addDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase.config";
 import Colors from "../../../assets/theme/Colors";
 import PrimaryButton from "../../components/PrimaryButton";
+import { Picker } from "@react-native-picker/picker";
+import { async } from "@firebase/util";
+const IndividualStudentMessagesScreen = ({ navigation ,route}) => {
+    const {name}=route.params
 
-const IndividualStudentMessagesScreen = ({ navigation }) => {
   const[message,setMessage]=useState('');
-const[teachersData,setTeachersData]=useState('')
+const[teachersData,setTeachersData]=useState([])
   const[StudentName,setStudentName]=useState('')
   const[loading,setLoading]=useState(false)
-  
+  const[selectedTeacher,setSelectedTeacher]=useState('')
+  const[recieverID,setRecieverID]=useState('')
 
-const getTeachers=()=>{
-    const newData= []
-    const dbref= collection(db,'users')
-    getDocs(dbref).then((docs)=>{
-        docs.docs.map((doc)=>{
-           newData.push(doc.data()) 
-        })
-    })
-    setTeachersData(newData)
-}
+const[loadingData,setLoadingData]=useState(true)
+ 
+
 useEffect(()=>{
-
+    const getTeachers=async()=>{
+    
+        const newData= []
+        const dbref= collection(db,'users')
+        const docs= await getDocs(dbref)
+      
+        
+       const data=     docs.docs.map((doc)=>{
+               return doc.data()
+             
+            })
+       
+        setTeachersData(data)
+    
+         setLoadingData(false)
+    }
     getTeachers()
 },[])
 
@@ -52,31 +64,35 @@ useEffect(()=>{
   const sendMessage=async()=>{
     
   
-    const date= new Date().toDateString()
+   if(recieverID ==''){
+    alert('Select A Teacher First')
+   }
+   else if(message==''){
+    alert('Enter A Message')
+   }
+   else{ const date= new Date().toDateString()
     console.log(date)
-    addDoc(collection(db, "AllMessages"), {
+    addDoc(collection(db, "IndividualMessages"), {
     message,
     sendDate: date,
-    teacherName,
-    teacherId,
-    subject: teacherSubject,
+senderID:auth.currentUser.uid,
+    recieverID,
+    senderName:name,
     type: 'individual',
-    senderId: auth.currentUser.uid
+    reply:''
+
     }).then(()=>{
       setLoading(false)
       setMessage('')
     Alert.alert('Message Sent To All')
-    });
+    });}
   
   
     
   }
   return (
     <View style={styles.container}>
-       <Image
-        style={styles.Image}
-        source={require("../../../assets/logo.png")}
-      />
+       
      
       <View style={styles.textInputMainView}>
       {
@@ -87,23 +103,39 @@ useEffect(()=>{
               />
             
           }
-          <View style={{height:200,width:300}}>
+          <View style={{height:hp('20%'),borderBottomWidth:2,borderColor:Colors.secondary,justifyContent:'center',padding:10,width:wp('100%')}}>
+   
+       {   loadingData ?
+
+<ActivityIndicator
+size={'small'}
+color={'blue'}
+/>
+:
+<View>
+<Text style={styles.textStyle}>Please Select A Teacher</Text>
 <FlatList
 data={teachersData}
 renderItem={({item})=>{
-    return(
-        <TouchableOpacity>
-            <View style={{flexDirection:'row'}}>
-                <Text>{item.name}</Text>
-                <Text>{item.subject}</Text>
 
+    return(
+        <TouchableOpacity 
+        onPress={()=>{setRecieverID(item.uid)}}
+        >
+            <View style={{flexDirection:'row', margin:5,elevation:5,shadowColor:Colors.secondary,borderRadius:10, backgroundColor:Colors.background,justifyContent:'space-between'
+        }}>
+                <Text style={{fontSize:16,margin:3,padding:3}} >{item.name}</Text>
+        
+                <Text style={{fontSize:16,margin:3,padding:3}} >{item.subjectName}</Text>
             </View>
         </TouchableOpacity>
-    )
+           
+        )
 }}
-
+keyExtractor={(item)=>{return item.uid}}
 />
-
+    </View>
+}
           </View>
 
         <View style={[styles.inputView,{   top: hp('3%'),}]}>
@@ -134,11 +166,12 @@ renderItem={({item})=>{
          
         <View style={{
   top: hp("2%"),
-  alignItems:'center'
+  justifyContent:'space-between',
+  flexDirection:'row'
 }}>
 
 <TouchableOpacity
-
+style={styles.viewMessagesButton}
   onPress={() => {
     navigation.navigate("IndividualRecievedMessagesScreen");
   }}
@@ -146,16 +179,32 @@ renderItem={({item})=>{
   <Text
     style={[
       styles.textStyle,
-      { fontSize: 20, color: Colors.secondary },
+      { fontSize: 16, color: Colors.secondary ,textAlign:'center',margin:5},
     ]}
   >
-   View Individual Messages
+   Personal Messages
+  </Text>
+</TouchableOpacity>
+<TouchableOpacity
+style={styles.viewMessagesButton}
+  onPress={() => {
+    navigation.navigate("StudentMessagesScreen");
+  }}
+>
+  <Text
+    style={[
+      styles.textStyle,
+      { fontSize: 16,textAlign:'center', color: Colors.secondary },
+    ]}
+  >
+   All Messages
   </Text>
 </TouchableOpacity>
         </View>
         </View>
 
       </View>
+      
     </View>
   );
 };
@@ -175,6 +224,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: Colors.textColor,
     fontWeight: "bold",
+    alignSelf:'center',
+    textAlign:'center'
   },
   textInputMainView: {
     width: wp("88%"),
@@ -195,6 +246,15 @@ const styles = StyleSheet.create({
     height: 150,
     bottom: hp("20%"),
   },
+  pickerStyle: {
+    width: wp("83%"),
+    overflow: "hidden",
+    borderWidth: 2,
+    borderColor: Colors.secondary,
+    borderRadius: 16,
+    height: hp("7%"),
+  },
+  viewMessagesButton:{padding:5,height:hp('8%'),justifyContent:'center',width:wp('30%'),margin:5,borderWidth:2,alignSelf:'flex-start',borderColor:Colors.secondary}
 });
 
 

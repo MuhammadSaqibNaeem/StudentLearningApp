@@ -8,6 +8,8 @@ import StudentHomeScreen from "../screens/StudentPannel/HomeScreen";
 import IndividualRecievedMessagesScreen from "../screens/StudentPannel/IndividualRecievedChats";
 
 import Colors from "../../assets/theme/Colors";
+import IndividualStudentMessagesScreen from "../screens/StudentPannel/IndividualChats";
+import StudentMessagesScreen from "../screens/StudentPannel/StudentMessagesScreen";
 
 const Stack = createStackNavigator();
 const StudentStack = () => {
@@ -58,6 +60,22 @@ const StudentStack = () => {
           headerTitle: "Student Communication",
         }}
         component={IndividualRecievedMessagesScreen}
+      />
+      <Stack.Screen
+        name="IndividualStudentMessagesScreen"
+        options={{
+          headerShown: true,
+          headerTitle: "Student Communication",
+        }}
+        component={IndividualStudentMessagesScreen}
+      />
+      <Stack.Screen
+        name="StudentMessagesScreen"
+        options={{
+          headerShown: true,
+          headerTitle: "Student Communication",
+        }}
+        component={StudentMessagesScreen}
       />
     
     </Stack.Navigator>

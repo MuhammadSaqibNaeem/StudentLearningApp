@@ -48,15 +48,16 @@ const LoginScreen = ({ navigation }) => {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           console.log(userCredential.user.emailVerified);
-          if (userCredential.user.emailVerified) {
-            navigation.navigate("StudentHomeScreen");
-          } else {
-            Alert.alert("Please Verify Your Email Address");
-            sendEmailVerification(auth.currentUser).then(() => {
-              // Email verification sent!
-              // ...
-            });
-          }
+             navigation.navigate("StudentHomeScreen");
+          // if (userCredential.user.emailVerified) {
+          //   navigation.navigate("StudentHomeScreen");
+          // } else {
+          //   Alert.alert("Please Verify Your Email Address");
+          //   sendEmailVerification(auth.currentUser).then(() => {
+          //     // Email verification sent!
+          //     // ...
+          //   });
+          // }
         })
         .catch((error) => {
           const errorCode = error.code;

@@ -43,7 +43,7 @@ const screenHeight = Dimensions.get("window").height;
 import { Entypo } from "@expo/vector-icons";
 const TeacherHomeScreen = ({ navigation }) => {
   const [user, setUser] = useState("");
-
+const[name,setName]=useState('')
   /////UserName From Firebase/////
   const profileData = async () => {
     const docRef = doc(db, "studentsData", auth.currentUser.uid);
@@ -51,6 +51,7 @@ const TeacherHomeScreen = ({ navigation }) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists) {
       setUser(docSnap.data());
+      setName(docSnap.data().name)
       console.log("datatatata====================", docSnap.data());
     }
   };
@@ -157,7 +158,9 @@ const TeacherHomeScreen = ({ navigation }) => {
                   name="message"
                   size={45}
                   color={Colors.secondary}
-                  onPress={() => navigation.navigate("StudentMassagesScreen")}
+                  onPress={() => navigation.navigate("IndividualStudentMessagesScreen",{
+name
+                  })}
                 />
               </View>
             </View>

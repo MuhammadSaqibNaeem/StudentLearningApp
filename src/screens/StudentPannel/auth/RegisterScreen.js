@@ -51,10 +51,10 @@ const StudentSignUpScreen = ({ navigation }) => {
     if (name != "" && email != "" && password != "") {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          sendEmailVerification(auth.currentUser).then(() => {
-            // Email verification sent!
-            // ...
-          });
+          // sendEmailVerification(auth.currentUser).then(() => {
+          //   // Email verification sent!
+          //   // ...
+         // });
 
           setDoc(doc(db, "studentsData", userCredential.user.uid), {
             uid: userCredential.user.uid,
