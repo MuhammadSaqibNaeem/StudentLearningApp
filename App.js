@@ -1,20 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/** @format */
 
-export default function App() {
+import AppRout from "./src/navigations/AppRout";
+import { LogBox } from "react-native";
+import { StatusBar, View } from "react-native";
+import Colors from "./assets/theme/Colors.js";
+function App() {
+  LogBox.ignoreAllLogs();
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor={Colors.secondary} barStyle="light-content" />
+      <AppRout />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
