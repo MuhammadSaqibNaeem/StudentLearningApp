@@ -37,7 +37,8 @@ const screenHeight = Dimensions.get("window").height;
 const AllStudentAddContent = ({ navigation }) => {
   const [addContent, setAddContent] = useState("");
   const [user, setUser] = useState("");
-  console.log(user);
+
+  //   console.log(user.name);
   const profileData = async () => {
     const docRef = doc(db, "users", auth.currentUser.uid);
     const docSnap = await getDoc(docRef);
@@ -53,7 +54,7 @@ const AllStudentAddContent = ({ navigation }) => {
   const AssignContent = () => {
     const dbref = collection(db, "AllStudentContent");
     addDoc(dbref, {
-      teacherName: user.name,
+      teacherName: user?.name,
       addContent,
       date: new Date().toDateString(),
     }).then(() => {

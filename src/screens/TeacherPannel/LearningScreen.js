@@ -26,7 +26,9 @@ const LearningScreen = ({ navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
-        <Text>Raj Cognitive Learning</Text>
+        {/* <Text style={[styles.HeadingTextStyle, { marginBottom: 20 }]}>
+          Cognitive Learning
+        </Text> */}
         <View style={styles.ProgressViewStyle}>
           <View style={styles.textProgressView}>
             <Progress.Pie
