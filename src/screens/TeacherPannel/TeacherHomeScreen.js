@@ -285,14 +285,19 @@ const TeacherHomeScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.SecondView}>
-            <View style={{ marginBottom: 10 }}>
+            {/* <View style={{ marginBottom: 10 }}>
               <PrimaryButton title={"Add New Office Hours"} width={wp("80%")} />
-            </View>
-            <PrimaryButton title={"Add Content"} button={"outline"} />
+            </View> */}
+            <PrimaryButton
+              title={"Add Content"}
+              button={"outline"}
+              onPress={() => navigation.navigate("AllStudentAddContent")}
+            />
             <View style={{ marginTop: 10 }}>
               <PrimaryButton
                 title={"Create New Discussion Time"}
                 width={wp("80%")}
+                onPress={() => navigation.navigate("CreateDiscusionTime")}
               />
             </View>
             <View

@@ -11,11 +11,13 @@ import CogniticScreen from "../screens/TeacherPannel/CogniticScreen";
 import UnitScreen from "../screens/TeacherPannel/UnitScreen";
 import MessagesScreen from "../screens/TeacherPannel/MessagesScreen";
 import RecievedCommunication from "../screens/TeacherPannel/RecievedChats";
+import AddNewOfficeTime from "../screens/TeacherPannel/AddNewOfficeTime";
+import AllStudentAddContent from "../screens/TeacherPannel/AllStudentAddContent";
+import CreateDiscusionTime from "../screens/TeacherPannel/CreateDiscusionTime";
 const Stack = createStackNavigator();
 const TeacherMainStack = () => {
   return (
     <Stack.Navigator
- 
       screenOptions={{
         headerStyle: {
           backgroundColor: Colors.secondary,
@@ -27,7 +29,6 @@ const TeacherMainStack = () => {
         },
       }}
     >
-
       <Stack.Screen
         name="TeacherLoginScreen"
         options={{
@@ -103,6 +104,33 @@ const TeacherMainStack = () => {
           headerTitle: "Messages",
         }}
         component={RecievedCommunication}
+      />
+      <Stack.Screen
+        name="AllStudentAddContent"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Add Content",
+        }}
+        component={AllStudentAddContent}
+      />
+      <Stack.Screen
+        name="AddNewOfficeTime"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "New Office Time",
+        }}
+        component={AddNewOfficeTime}
+      />
+      <Stack.Screen
+        name="CreateDiscusionTime"
+        options={{
+          headerShown: true,
+          headerTitleAlign: "center",
+          headerTitle: "Create Discussion Time",
+        }}
+        component={CreateDiscusionTime}
       />
     </Stack.Navigator>
   );

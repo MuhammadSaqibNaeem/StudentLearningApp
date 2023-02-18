@@ -166,6 +166,21 @@ const TeacherHomeScreen = ({ navigation }) => {
                 />
               </View>
             </View>
+            <View style={{ marginBottom: 10 }}>
+              <PrimaryButton
+                title={"Class Discussion Time"}
+                width={wp("80%")}
+                onPress={() => navigation.navigate("TeacherDiscussionTime")}
+              />
+            </View>
+            <View style={{ marginBottom: 10 }}>
+              <PrimaryButton
+                title={"Class Assignment"}
+                width={wp("80%")}
+                onPress={() => navigation.navigate("ClassContentScreen")}
+              />
+            </View>
+            <View style={{ height: hp("10%") }}></View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

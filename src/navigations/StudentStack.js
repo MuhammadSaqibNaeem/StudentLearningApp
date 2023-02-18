@@ -12,6 +12,8 @@ import IndividualStudentMessagesScreen from "../screens/StudentPannel/Individual
 import StudentMessagesScreen from "../screens/StudentPannel/StudentMessagesScreen";
 import YourCurrentSchedule from "../screens/StudentPannel/CurrentSchedule";
 import TaskListScreen from "../screens/StudentPannel/TaskListScreen";
+import ClassContentScreen from "../screens/StudentPannel/ClassContent";
+import TeacherDiscussionTime from "../screens/StudentPannel/DiscussionTime";
 const Stack = createStackNavigator();
 const StudentStack = () => {
   return (
@@ -92,6 +94,24 @@ const StudentStack = () => {
           headerTitleAlign: "center",
         }}
         component={TaskListScreen}
+      />
+      <Stack.Screen
+        name="ClassContentScreen"
+        options={{
+          headerShown: true,
+          headerTitle: "Class Assignment",
+          headerTitleAlign: "center",
+        }}
+        component={ClassContentScreen}
+      />
+      <Stack.Screen
+        name="TeacherDiscussionTime"
+        options={{
+          headerShown: true,
+          headerTitle: "Discussion Time",
+          headerTitleAlign: "center",
+        }}
+        component={TeacherDiscussionTime}
       />
     </Stack.Navigator>
   );

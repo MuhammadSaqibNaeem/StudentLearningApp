@@ -40,34 +40,34 @@ const MainStack = () => {
         },
       }}
     >
-      {user ? (
-        <Stack.Group>
-          <Stack.Screen
-            name="TeacherMainStack"
-            options={{
-              headerShown: false,
-            }}
-            component={TeacherMainStack}
-          />
-          <Stack.Screen
-            name="StudentStack"
-            options={{
-              headerShown: false,
-            }}
-            component={StudentStack}
-          />
-        </Stack.Group>
-      ) : (
-        <Stack.Group>
-          <Stack.Screen
-            name="WelcomeScreen"
-            options={{
-              headerShown: false,
-            }}
-            component={WelcomeScreen}
-          />
-        </Stack.Group>
-      )}
+      {/* {user ? ( */}
+      {/* <Stack.Group> */}
+      <Stack.Screen
+        name="TeacherMainStack"
+        options={{
+          headerShown: false,
+        }}
+        component={TeacherMainStack}
+      />
+      <Stack.Screen
+        name="StudentStack"
+        options={{
+          headerShown: false,
+        }}
+        component={StudentStack}
+      />
+      {/* </Stack.Group>
+      ) : ( */}
+      {/* <Stack.Group> */}
+      <Stack.Screen
+        name="WelcomeScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={WelcomeScreen}
+      />
+      {/* </Stack.Group>
+      )} */}
     </Stack.Navigator>
   );
 };
