@@ -45,24 +45,11 @@ const LoginScreen = ({ navigation }) => {
 
   const LogIn = async () => {
     if (email != "" && password != "") {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          console.log(userCredential.user.emailVerified);
-             navigation.navigate("StudentHomeScreen");
-          // if (userCredential.user.emailVerified) {
-          //   navigation.navigate("StudentHomeScreen");
-          // } else {
-          //   Alert.alert("Please Verify Your Email Address");
-          //   sendEmailVerification(auth.currentUser).then(() => {
-          //     // Email verification sent!
-          //     // ...
-          //   });
-          // }
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
+      signInWithEmailAndPassword(auth, email, password).then(
+        (userCredential) => {
+          navigation.navigate("StudentHomeScreen");
+        }
+      );
     } else {
       alert("Your Email Address or Password is invalid");
     }

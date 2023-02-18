@@ -21,13 +21,34 @@ const screenHeight = Dimensions.get("window").height;
 import PrimaryButton from "../../components/PrimaryButton";
 import Colors from "../../../assets/theme/Colors";
 import TextInputCom from "../../components/TextInputCom";
-import { addDoc, collection, collectionGroup } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  collectionGroup,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { auth, db } from "../../../firebase.config";
 const CreateDiscusionTime = () => {
   const [classTime, setClassTime] = useState("");
+  const [user, setUser] = useState("");
+
+  console.log("-============---=", user);
+  const profileData = async () => {
+    const docRef = doc(db, "users", auth.currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists) {
+      setUser(docSnap.data());
+    }
+  };
+  /////UserName From Firebase/////
+  useEffect(() => {
+    profileData();
+  }, []);
   const AssignTask = () => {
     const dbref = collection(db, "AllStudentDiscussionTime");
     addDoc(dbref, {
+      teacherName: user.name,
       task: "Discussion Time",
       discussionTime: classTime,
       date: new Date().toDateString(),
