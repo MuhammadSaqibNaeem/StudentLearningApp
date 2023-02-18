@@ -21,6 +21,7 @@ import {
   ToastAndroid,
   KeyboardAvoidingView,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
@@ -35,6 +36,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { TouchableOpacity } from "react-native";
+import { async } from "@firebase/util";
 
 ////responsive width height code ///
 ////responsive width height code ///
@@ -47,44 +49,83 @@ const StudentSignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const SignUp = async () => {
-    if (name != "" && email != "" && password != "") {
+  // const SignUp = async () => {
+  //   if (name != "" && email != "" && password != "") {
+  //     createUserWithEmailAndPassword(auth, email, password)
+  //       .then((userCredential) => {
+  //         // sendEmailVerification(auth.currentUser).then(() => {
+  //         //   // Email verification sent!
+  //         //   // ...
+  //        // });
+  //          AsyncStorage.setItem('UserType','Student').then(()=>{
+  //           setDoc(doc(db, "studentsData", userCredential.user.uid), {
+  //             uid: userCredential.user.uid,
+  //             name,
+  //             email,
+  //           });
+  //           {
+  //             Platform.OS === "ios"
+  //               ? Alert.alert("Your Account Successfully Created")
+  //               : ToastAndroid.show(
+  //                   "Your Account Successfully Created",
+  //                   ToastAndroid.SHORT
+  //                 );
+  //           }
+  //          })
+          
+
+  //         navigation.navigate("StudentLoginScreen");
+  //       })
+  //       .catch((error) => {
+  //         const errorCode = error.code;
+  //         const errorMessage = error.message;
+  //         {
+  //           Platform.OS === "ios"
+  //             ? Alert.alert(errorMessage, ToastAndroid.SHORT)
+  //             : ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
+  //         }
+  //       });
+  //   } else {
+  //     Alert.alert("Sorry, Please Enter All Data");
+  //   }
+  // };
+  const SignUp= async()=>{
+   
+  
+    if (
+      email != "" &&
+      password != "" &&
+      name != "" 
+    ) {
+    
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // sendEmailVerification(auth.currentUser).then(() => {
-          //   // Email verification sent!
-          //   // ...
-         // });
+          AsyncStorage.setItem("UserType", "Student").then(() => {
+           
+           
+            setDoc(
+              doc(db, "studentsData", "" + userCredential.user.uid),
 
-          setDoc(doc(db, "studentsData", userCredential.user.uid), {
-            uid: userCredential.user.uid,
-            name,
-            email,
+              {
+                uid: userCredential.user.uid,
+                name,
+                email:email.toLowerCase(),
+               
+              }
+            );
+            alert("Your Account Successfully Created");
           });
-          {
-            Platform.OS === "ios"
-              ? Alert.alert("Your Account Successfully Created")
-              : ToastAndroid.show(
-                  "Your Account Successfully Created",
-                  ToastAndroid.SHORT
-                );
-          }
-
-          navigation.navigate("StudentLoginScreen");
         })
         .catch((error) => {
-          const errorCode = error.code;
+        
           const errorMessage = error.message;
-          {
-            Platform.OS === "ios"
-              ? Alert.alert(errorMessage, ToastAndroid.SHORT)
-              : ToastAndroid.show(errorMessage, ToastAndroid.SHORT);
-          }
+          Alert.alert(errorMessage);
         });
+      
     } else {
-      Alert.alert("Sorry, Please Enter All Data");
+      alert("Sorry, Please Enter All Data");
     }
-  };
+  }
 
   return (
     <SafeAreaView>
@@ -132,15 +173,18 @@ const StudentSignUpScreen = ({ navigation }) => {
               onChangeText={(value) => setPassword(value)}
             />
           </View>
-          <TouchableOpacity
-            style={{ alignSelf: "center", padding: 5, flexDirection: "row" }}
-            onPress={() => navigation.navigate("StudentLoginScreen")}
-          >
-            <Text style={[styles.textStyle, { color: Colors.textColor }]}>
-              if You Have Account?
+          <View style={{flexDirection:'row',justifyContent:'center'}}>
+          <Text style={[styles.textStyle, { color: Colors.textColor }]}>
+              Already Have An Account ?
             </Text>
-            <Text style={styles.textStyle}> Log In</Text>
+          <TouchableOpacity
+            style={{ alignSelf: "center",}}
+            onPress={() => navigation.goBack()}
+          >
+           
+            <Text style={styles.textStyle}> Login In </Text>
           </TouchableOpacity>
+          </View>
           <View style={styles.textInputSubViews}>
             <PrimaryButton title={"Sign Up"} onPress={SignUp} />
           </View>

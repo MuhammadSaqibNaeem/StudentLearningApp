@@ -11,6 +11,7 @@
    ToastAndroid,
    ActivityIndicator,
    AsyncStorage,
+   Alert,
  } from "react-native";
  import React, { useEffect, useRef, useState } from "react";
  import {
@@ -52,8 +53,8 @@ import Colors from "../../../assets/theme/Colors";
      const document = [];
      const userid = auth.currentUser.uid;
      const docref = collection(db, "IndividualMessages");
-   //  const q = query(docref, where("status", "==", "unread"));
-     getDocs(docref).then((docsnap) => {
+    const q = query(docref, where("status", "==", "unread"));
+     getDocs(q).then((docsnap) => {
        docsnap.docs.map((doc) => {
          document.push(doc.data());
          setData(document);
@@ -82,16 +83,18 @@ import Colors from "../../../assets/theme/Colors";
          c.docs.map((doc) => {
            if (doc.exists) {
              const recievedDate = new Date().toDateString();
-             const status = "read";
+            
              updateDoc(doc.ref, {
                reply: myreply,
                recieverName,
                recievedDate,
+               status:'read'
                
              }).then(() => {
                setReply("");
                setLoading(false);
-               ToastAndroid.show("Reply Sent", ToastAndroid.SHORT);
+               checkMessages();
+              Alert.alert('Reply Sent')
              });
            }
          });
@@ -145,14 +148,14 @@ import Colors from "../../../assets/theme/Colors";
                onChangeText={(value) => onChangeText(index, value)}
              />
            </View>
-           {loading && (
-             <ActivityIndicator
-               ref={ref}
-               key={index}
-               color={Colors.secondary}
-               size={"large"}
-             />
-           )}
+           {
+            loading  && <ActivityIndicator
+            ref={ref}
+            key={index}
+            color={Colors.secondary}
+            size={'large'}
+            />
+           }
            <View style={{ top: hp("12%") }}>
              <PrimaryButton
                title={"Send Reply"}

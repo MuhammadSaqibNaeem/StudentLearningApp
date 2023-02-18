@@ -28,6 +28,8 @@ import {
   Modal,
   FlatList,
   AsyncStorage,
+  ToastAndroid,
+  Platform
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Colors from "../../../assets/theme/Colors";
@@ -165,12 +167,22 @@ const TeacherHomeScreen = ({ navigation }) => {
     );
   };
   const logOut = () => {
-    signOut(auth)
-      .then(() => {
-        navigation.replace("WelcomeScreen");
-        ToastAndroid.show("Logged Out", ToastAndroid.SHORT);
-      })
-      .catch((error) => {});
+    
+    auth.signOut().then(()=>{
+      AsyncStorage.removeItem('UserType').then(()=>{
+          
+        Platform.OS === "ios"
+          ? Alert.alert("Logged Out Sucess")
+          : ToastAndroid.show(
+              "Logged Out Sucess",
+              ToastAndroid.SHORT
+            );
+            
+      
+            navigation.navigate('WelcomeScreen')
+          })
+    })
+   
   };
 
   const ModalScreen = () => {
@@ -348,11 +360,16 @@ const TeacherHomeScreen = ({ navigation }) => {
                 <ModalScreen />
               ) : (
                 <View>
-                  <FlatList
+                 {
+                 !data &&
+                 <Text>No Students Yet</Text>}
+
+                {data && <FlatList
                     data={filterData}
                     renderItem={({ item }) => {
                       return (
                         <TouchableOpacity
+                        style={styles.StudentSelectButton}
                           onPress={() => {
                             setStudentDetails(item);
                           }}
@@ -361,7 +378,7 @@ const TeacherHomeScreen = ({ navigation }) => {
                             style={{
                               fontSize: 18,
                               fontWeight: "bold",
-                              color: Colors.secondary,
+                              color: Colors.background,
                             }}
                           >
                             {item.name}
@@ -372,7 +389,11 @@ const TeacherHomeScreen = ({ navigation }) => {
                     keyExtractor={(item) => {
                       return item.uid;
                     }}
-                  />
+                  />}
+                  
+                
+                  
+                  
                 </View>
               )}
             </View>
@@ -469,7 +490,7 @@ const styles = StyleSheet.create({
   studentsListView: {
     margin: 10,
     padding: 10,
-    borderBottomWidth: 1,
     borderColor: Colors.secondary,
   },
+  StudentSelectButton:{padding:5,marginVertical:5,alignItems:'center',borderRadius:5,justifyContent:'center',elevation:5,backgroundColor:Colors.secondary}
 });

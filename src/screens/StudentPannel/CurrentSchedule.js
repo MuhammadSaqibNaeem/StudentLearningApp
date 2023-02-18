@@ -57,9 +57,10 @@ const YourCurrentSchedule = ({ navigation }) => {
   }, []);
   return (
     <SafeAreaView>
-      {user ? (
+ 
+      {!isLoading ? (
         <SafeAreaView style={{ marginTop: "5%" }}>
-          <FlatList
+         {user ? <FlatList
             data={user}
             renderItem={({ item }) => (
               <CurrentTask
@@ -68,7 +69,12 @@ const YourCurrentSchedule = ({ navigation }) => {
               />
             )}
             keyExtractor={(item) => item.id}
-          />
+          /> :
+          <View >
+
+            <Text style={styles.HeadingTextStyle}>No Current Schedules For You</Text>
+          </View>
+          }
         </SafeAreaView>
       ) : (
         <ActivityIndicator

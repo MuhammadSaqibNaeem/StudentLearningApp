@@ -27,6 +27,7 @@ const[teachersData,setTeachersData]=useState([])
   const[loading,setLoading]=useState(false)
   const[selectedTeacher,setSelectedTeacher]=useState('')
   const[recieverID,setRecieverID]=useState('')
+  const[selectedIndex,setSelectedIndex]=useState(-1)
 
 const[loadingData,setLoadingData]=useState(true)
  
@@ -79,12 +80,13 @@ senderID:auth.currentUser.uid,
     recieverID,
     senderName:name,
     type: 'individual',
-    reply:''
+    reply:'',
+    status:'unread'
 
     }).then(()=>{
       setLoading(false)
       setMessage('')
-    Alert.alert('Message Sent To All')
+    Alert.alert('Message Sent ')
     });}
   
   
@@ -116,17 +118,26 @@ color={'blue'}
 <Text style={styles.textStyle}>Please Select A Teacher</Text>
 <FlatList
 data={teachersData}
-renderItem={({item})=>{
+renderItem={({item,index})=>{
 
     return(
-        <TouchableOpacity 
-        onPress={()=>{setRecieverID(item.uid)}}
+        <TouchableOpacity
+       
+        onPress={()=>{
+          setSelectedIndex(index)
+          setRecieverID(item.uid)}}
         >
-            <View style={{flexDirection:'row', margin:5,elevation:5,shadowColor:Colors.secondary,borderRadius:10, backgroundColor:Colors.background,justifyContent:'space-between'
+            <View 
+            key={index}
+            
+            style={{
+              backgroundColor: index==selectedIndex ? Colors.secondary:Colors.background,
+    
+              flexDirection:'row', margin:5,elevation:5,shadowColor:Colors.secondary,borderRadius:10, justifyContent:'space-between'
         }}>
-                <Text style={{fontSize:16,margin:3,padding:3}} >{item.name}</Text>
+                <Text style={{fontSize:16,margin:3,padding:3,color: index==selectedIndex?Colors.background:Colors.textColor}} >{item.name}</Text>
         
-                <Text style={{fontSize:16,margin:3,padding:3}} >{item.subjectName}</Text>
+                <Text style={{fontSize:16,margin:3,padding:3,color: index==selectedIndex?Colors.background:Colors.textColor}} >{item.subjectName}</Text>
             </View>
         </TouchableOpacity>
            
@@ -254,7 +265,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     height: hp("7%"),
   },
-  viewMessagesButton:{padding:5,height:hp('8%'),justifyContent:'center',width:wp('30%'),margin:5,borderWidth:2,alignSelf:'flex-start',borderColor:Colors.secondary}
+  viewMessagesButton:{padding:5,height:hp('8%'),justifyContent:'center',width:wp('30%'),margin:5,borderWidth:2,alignSelf:'flex-start',borderColor:Colors.secondary},
+  
 });
 
 

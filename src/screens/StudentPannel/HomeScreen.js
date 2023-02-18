@@ -25,6 +25,9 @@ import {
   TouchableOpacity,
   Alert,
   TextInput,
+  AsyncStorage,
+  ToastAndroid,
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Colors from "../../../assets/theme/Colors";
@@ -91,12 +94,21 @@ const TeacherHomeScreen = ({ navigation }) => {
     );
   };
   const logOut = () => {
-    signOut(auth)
-      .then(() => {
-        navigation.replace("WelcomeScreen");
-        ToastAndroid.show("Logged Out", ToastAndroid.SHORT);
-      })
-      .catch((error) => {});
+    auth.signOut().then(()=>{
+      AsyncStorage.removeItem('UserType').then(()=>{
+          
+        Platform.OS === "ios"
+          ? Alert.alert("Logged Out Sucess")
+          : ToastAndroid.show(
+              "Logged Out Sucess",
+              ToastAndroid.SHORT
+            );
+            
+      
+            navigation.navigate('WelcomeScreen')
+          })
+    })
+   
   };
 
   return (

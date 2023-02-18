@@ -21,6 +21,7 @@ import {
   ToastAndroid,
   KeyboardAvoidingView,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
@@ -51,27 +52,29 @@ const TeacherSignUpScreen = ({ navigation }) => {
     if (name != "" && email != "" && password != "") {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          sendEmailVerification(auth.currentUser).then(() => {
-            // Email verification sent!
-            // ...
-          });
+          // sendEmailVerification(auth.currentUser).then(() => {
+          //   // Email verification sent!
+          //   // ...
+          // });
+AsyncStorage.setItem('UserType','Teacher').then(()=>{
+  setDoc(doc(db, "users", userCredential.user.uid), {
+    uid: userCredential.user.uid,
+    name,
+    email: email.toLocaleLowerCase(),
+    subjectName,
+  });
+  {
+    Platform.OS === "ios"
+      ? Alert.alert("Your Account Successfully Created")
+      : ToastAndroid.show(
+          "Your Account Successfully Created",
+          ToastAndroid.SHORT
+        );
+  }
+})
+          
 
-          setDoc(doc(db, "users", userCredential.user.uid), {
-            uid: userCredential.user.uid,
-            name,
-            email,
-            subjectName,
-          });
-          {
-            Platform.OS === "ios"
-              ? Alert.alert("Your Account Successfully Created")
-              : ToastAndroid.show(
-                  "Your Account Successfully Created",
-                  ToastAndroid.SHORT
-                );
-          }
-
-          navigation.navigate("TeacherLoginScreen");
+        
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -142,15 +145,18 @@ const TeacherSignUpScreen = ({ navigation }) => {
               onChangeText={(value) => setPassword(value)}
             />
           </View>
-          <TouchableOpacity
-            style={{ alignSelf: "center", padding: 5, flexDirection: "row" }}
-            onPress={() => navigation.navigate("TeacherLoginScreen")}
-          >
-            <Text style={[styles.textStyle, { color: Colors.textColor }]}>
-              if You Have Account?
+          <View style={{flexDirection:'row',justifyContent:'center'}}>
+          <Text style={[styles.textStyle, { color: Colors.textColor }]}>
+              Already Have An Account ?
             </Text>
-            <Text style={styles.textStyle}> Log In</Text>
+          <TouchableOpacity
+            style={{ alignSelf: "center",}}
+            onPress={() => navigation.goBack()}
+          >
+           
+            <Text style={styles.textStyle}> Login In </Text>
           </TouchableOpacity>
+          </View>
           <View style={styles.textInputSubViews}>
             <PrimaryButton title={"Sign Up"} onPress={SignUp} />
           </View>

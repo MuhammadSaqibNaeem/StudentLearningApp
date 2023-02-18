@@ -19,6 +19,7 @@ import {
   ToastAndroid,
   KeyboardAvoidingView,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 
@@ -33,6 +34,7 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { TouchableOpacity } from "react-native";
+import { collection, getDocs, query, where } from "firebase/firestore";
 ////responsive width height code ///
 ////responsive width height code ///
 const screenWidth = Dimensions.get("window").width;
@@ -43,15 +45,32 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const LogIn = async () => {
+    
+    
     if (email != "" && password != "") {
-      signInWithEmailAndPassword(auth, email, password).then(
-        (userCredential) => {
-          navigation.navigate("TeacherHomeScreen");
-        }
-      );
-    } else {
-      alert("Your Email Address or Password is invalid");
-    }
+
+      const docref=collection(db, "users")
+    
+      const q= query(docref,where ("email",'==',email.toLocaleLowerCase()))
+      getDocs(q).then((snap)=>{
+        const l=   snap.docs.map((doc)=>{
+             console.log(doc.data())
+           }).length
+          if(l==1){
+           signInWithEmailAndPassword(auth, email, password)
+                 .then(() => {
+                     AsyncStorage.setItem('UserType','Teacher')
+                 })
+                 
+                 .catch((error) => {
+                  alert('Wrong Email Or Password')
+                 }); 
+          }
+          else{
+           alert('No Registered Student With Given Email')
+          }
+          })
+     }
   };
   return (
     <SafeAreaView>
@@ -89,15 +108,18 @@ const LoginScreen = ({ navigation }) => {
               onChangeText={(value) => setPassword(value)}
             />
           </View>
+          <View style={{flexDirection:'row',justifyContent:'center'}}>
+          <Text style={[styles.textStyle, { color: Colors.textColor }]}>
+              Not Yet Registered ?
+            </Text>
           <TouchableOpacity
-            style={{ alignSelf: "center", padding: 5, flexDirection: "row" }}
+            style={{ alignSelf: "center",}}
             onPress={() => navigation.navigate("TeacherSignUpScreen")}
           >
-            <Text style={[styles.textStyle, { color: Colors.textColor }]}>
-              if your not register?
-            </Text>
+           
             <Text style={styles.textStyle}> Sign Up</Text>
           </TouchableOpacity>
+          </View>
           <View style={styles.textInputSubViews}>
             <PrimaryButton title={"LogIn"} onPress={LogIn} />
           </View>

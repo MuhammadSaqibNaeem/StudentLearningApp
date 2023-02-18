@@ -7,28 +7,15 @@ import Colors from "../../assets/theme/Colors";
 import TeacherMainStack from "./TeacherStack";
 import StudentStack from "./StudentStack";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import SplashScreen from "../screens/SplashScreen";
 import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 const Stack = createStackNavigator();
 const MainStack = () => {
-  const [user, setUser] = useState("");
-  const checkUser = () => {
-    const subs = onAuthStateChanged(auth, (userExists) => {
-      console.log(userExists);
-      if (userExists) {
-        setUser(userExists);
-      } else {
-        setUser("");
-      }
-      return subs;
-    });
-  };
-  useEffect(() => {
-    checkUser();
-  }, []);
+ 
   return (
     <Stack.Navigator
-      initialRouteName="WelcomeScreen"
+      initialRouteName="SplashScreen"
       screenOptions={{
         headerStyle: {
           backgroundColor: Colors.secondary,
@@ -40,8 +27,14 @@ const MainStack = () => {
         },
       }}
     >
-      {/* {user ? ( */}
-      {/* <Stack.Group> */}
+       <Stack.Screen
+        name="SplashScreen"
+        options={{
+          headerShown: false,
+        }}
+        component={SplashScreen}
+      />
+    
       <Stack.Screen
         name="TeacherMainStack"
         options={{

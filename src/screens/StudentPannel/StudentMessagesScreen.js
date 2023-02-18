@@ -53,10 +53,24 @@ renderItem={({item})=>{
   console.log(item)
   return(
     <View style={styles.leftView}>
-                 <Text style={[styles.messageText]}>{item.message}</Text>
-                 <Text style={[styles.messageText]}>{item.sendDate}</Text>
-                 <Text style={[styles.messageText,]}>{item.teacherName}</Text>
-                 <Text style={[styles.messageText,]}>{item.subject}</Text>
+      <View style={{flexDirection:'column',margin:5,justifyContent:'space-between'}}>
+      <Text  style={[styles.messageText,{alignSelf:'center'}]}>Message:</Text>
+      <Text style={[styles.messageText,{color:Colors.background,alignSelf:'center'}]}>{item.message}</Text>
+        </View>
+        <View style={{flexDirection:'column',margin:5,justifyContent:'space-between'}}>
+      <Text style={[styles.messageText,{alignSelf:'center'}]}>Date:</Text>
+      <Text style={[styles.messageText,{color:Colors.background,alignSelf:'center'}]}>{item.sendDate}</Text>
+        </View>
+        <View style={{flexDirection:'column',margin:5,justifyContent:'space-between'}}>
+      <Text  style={[styles.messageText,{alignSelf:'center'}]}>Teacher Name:</Text>
+      <Text style={[styles.messageText,{color:Colors.background,alignSelf:'center'}]}>{item.teacherName}</Text>
+        </View>
+        <View style={{flexDirection:'column',margin:5,justifyContent:'space-between'}}>
+      <Text  style={[styles.messageText,{alignSelf:'center'}]}>Subject Name:</Text>
+      <Text style={[styles.messageText,{color:Colors.background,alignSelf:'center'}]}>{item.subject}</Text>
+        </View>
+
+                 
 
           </View>
   )
@@ -125,12 +139,13 @@ rightView:{
     backgroundColor:Colors.secondary
  },
  leftView:{
-  height:hp('15%'),
+  //height:hp('15%'),
   width:wp('90%'),
   padding:5,
     borderRadius:20, 
     top: hp("2%"),
-    alignItems:'center',
+   alignItems:'center',
+
     justifyContent:'space-between',
  
     backgroundColor:Colors.secondary
