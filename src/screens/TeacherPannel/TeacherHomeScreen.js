@@ -188,11 +188,14 @@ const TeacherHomeScreen = ({ navigation }) => {
                       setModalVisible(!modalVisible);
                     }}
                   />
-                  <Progress.Pie
-                    progress={0.7}
-                    width={50}
-                    color={Colors.secondary}
-                  />
+                  <View style={styles.pieChartText}>
+                    <Progress.Pie
+                      progress={0.7}
+                      width={50}
+                      color={Colors.secondary}
+                    />
+                    <Text style={styles.pieChartTextStyle}>70 %</Text>
+                  </View>
                 </View>
                 <View style={[styles.mainView, { marginTop: hp("2%") }]}>
                   <View style={styles.textView}>
@@ -207,11 +210,14 @@ const TeacherHomeScreen = ({ navigation }) => {
                       setModalVisible(!modalVisible);
                     }}
                   />
-                  <Progress.Pie
-                    progress={0.5}
-                    width={50}
-                    color={Colors.secondary}
-                  />
+                  <View style={styles.pieChartText}>
+                    <Progress.Pie
+                      progress={0.5}
+                      width={50}
+                      color={Colors.secondary}
+                    />
+                    <Text style={styles.pieChartTextStyle}>50 %</Text>
+                  </View>
                 </View>
                 <View style={[styles.mainView, { marginTop: hp("2%") }]}>
                   <View style={styles.textView}>
@@ -226,11 +232,14 @@ const TeacherHomeScreen = ({ navigation }) => {
                     width={wp("30%")}
                     height={hp("6%")}
                   />
-                  <Progress.Pie
-                    progress={0.9}
-                    width={50}
-                    color={Colors.secondary}
-                  />
+                  <View style={styles.pieChartText}>
+                    <Progress.Pie
+                      progress={0.9}
+                      width={50}
+                      color={Colors.secondary}
+                    />
+                    <Text style={styles.pieChartTextStyle}>90 %</Text>
+                  </View>
                 </View>
               </View>
               <PrimaryButton
@@ -305,6 +314,14 @@ const TeacherHomeScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate("MessagesScreen")}
               />
             </View>
+            <PrimaryButton
+              title={"Cognitive Bas Group Messages"}
+              button={"outline"}
+              width={wp("60%")}
+              onPress={() => {
+                navigation.navigate("MessageSelectedStudents");
+              }}
+            />
           </View>
 
           <View style={styles.StudentSearchView}>
@@ -323,9 +340,9 @@ const TeacherHomeScreen = ({ navigation }) => {
                 onChangeText={(value) => searchName(value.toLowerCase())}
               />
             </View>
-            
+
             <View style={styles.studentsListView}>
-            <Text style={styles.HeadingTextStyle}>All Students</Text>
+              <Text style={styles.HeadingTextStyle}>All Students</Text>
               {modalVisible ? (
                 <ModalScreen />
               ) : (
@@ -401,7 +418,7 @@ const styles = StyleSheet.create({
   StudentSearchView: {
     width: wp("90%"),
     height: hp("40%"),
-    marginTop: 10,
+    marginTop: hp("5%"),
     // backgroundColor: "red",
     // justifyContent: "center",
   },
@@ -467,4 +484,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: Colors.secondary,
   },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  pieChartTextStyle: { fontWeight: "bold", color: Colors.secondary },
 });

@@ -94,21 +94,15 @@ const TeacherHomeScreen = ({ navigation }) => {
     );
   };
   const logOut = () => {
-    auth.signOut().then(()=>{
-      AsyncStorage.removeItem('UserType').then(()=>{
-          
+    auth.signOut().then(() => {
+      AsyncStorage.removeItem("UserType").then(() => {
         Platform.OS === "ios"
           ? Alert.alert("Logged Out Sucess")
-          : ToastAndroid.show(
-              "Logged Out Sucess",
-              ToastAndroid.SHORT
-            );
-            
-      
-            navigation.navigate('WelcomeScreen')
-          })
-    })
-   
+          : ToastAndroid.show("Logged Out Sucess", ToastAndroid.SHORT);
+
+        navigation.navigate("WelcomeScreen");
+      });
+    });
   };
 
   return (
@@ -192,8 +186,18 @@ const TeacherHomeScreen = ({ navigation }) => {
                 onPress={() => navigation.navigate("ClassContentScreen")}
               />
             </View>
-            <View style={{ height: hp("10%") }}></View>
+            <View style={{ marginBottom: 10 }}>
+              <PrimaryButton
+                title={"Cognitive Bas Group Messages "}
+                width={wp("90%")}
+                button={"outline"}
+                onPress={() => {
+                  navigation.navigate("RecievedMessages");
+                }}
+              />
+            </View>
           </View>
+          <View style={{ height: hp("50%") }}></View>
         </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>

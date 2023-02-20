@@ -67,14 +67,16 @@ const SocialScreen = () => {
               {studentName} Participation
             </Text>
           </View>
-
-          <Progress.Pie
-            progress={0.7}
-            width={70}
-            size={70}
-            color={Colors.secondary}
-            style={styles.progressStyle}
-          />
+          <View style={styles.pieChartText}>
+            <Progress.Pie
+              progress={0.7}
+              width={70}
+              size={70}
+              color={Colors.secondary}
+              style={styles.progressStyle}
+            />
+            <Text style={styles.pieChartTextStyle}>75 %</Text>
+          </View>
         </View>
         <View style={styles.secondView}>
           <Text style={[styles.HeadingTextStyle, { color: Colors.secondary }]}>
@@ -138,4 +140,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: wp("10%"),
   },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    right: "30%",
+  },
+  pieChartTextStyle: { fontWeight: "bold", color: Colors.secondary },
 });

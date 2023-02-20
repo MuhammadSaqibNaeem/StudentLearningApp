@@ -37,16 +37,18 @@ const TaskListScreen = ({ route }) => {
           <View style={styles.textView}>
             <Text style={styles.HeadingTextStyle}>{Data.task}</Text>
           </View>
-
-          <Progress.Pie
-            progress={0.8}
-            width={30}
-            color={Colors.secondary}
-            size={30}
-          />
-          <View style={styles.textView}>
-            <Text style={styles.HeadingTextStyle}>From</Text>
+          <View style={styles.pieChartText}>
+            <Progress.Pie
+              progress={0.8}
+              width={30}
+              color={Colors.secondary}
+              size={30}
+            />
+            <Text style={styles.pieChartTextStyle}>80 %</Text>
           </View>
+          {/* <View style={styles.textView}>
+            <Text style={styles.HeadingTextStyle}>From </Text>
+          </View> */}
         </View>
       </View>
     </SafeAreaView>
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   SecondView: {
-    width: wp("95%"),
+    width: wp("85%"),
     height: hp("10%"),
     justifyContent: "center",
     marginTop: hp("2%"),
@@ -114,5 +116,17 @@ const styles = StyleSheet.create({
   textView: {
     width: wp("40%"),
     justifyContent: "center",
+  },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  pieChartTextStyle: {
+    fontWeight: "bold",
+    color: Colors.secondary,
+    alignSelf: "center",
   },
 });

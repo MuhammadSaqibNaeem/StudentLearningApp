@@ -9,7 +9,7 @@ import {
   View,
   AsyncStorage,
 } from "react-native";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import PrimaryButton from "../../components/PrimaryButton";
 ////responsive width height code ///
 import {
@@ -22,14 +22,14 @@ const screenHeight = Dimensions.get("window").height;
 import Colors from "../../../assets/theme/Colors";
 import * as Progress from "react-native-progress";
 const LearningScreen = () => {
-  const[studentName,setStudentName]=useState('')
+  const [studentName, setStudentName] = useState("");
 
-  useEffect(()=>{
-    AsyncStorage.getItem('studentName').then((val)=>{
-      console.log(val)
-      setStudentName(val)
-    })
-  },[])
+  useEffect(() => {
+    AsyncStorage.getItem("studentName").then((val) => {
+      console.log(val);
+      setStudentName(val);
+    });
+  }, []);
   return (
     <SafeAreaView>
       <ScrollView style={styles.container}>
@@ -43,29 +43,33 @@ const LearningScreen = () => {
         </Text>
         <View style={styles.mainView}>
           <View style={styles.textView}>
-            <Text style={styles.HeadingTextStyle}>Working Progress</Text>
+            <Text style={styles.HeadingTextStyle}>Working Memory</Text>
           </View>
-
-          <Progress.Pie
-            progress={0.5}
-            width={70}
-            size={70}
-            color={Colors.secondary}
-            style={styles.progressStyle}
-          />
+          <View style={styles.pieChartText}>
+            <Progress.Pie
+              progress={0.6}
+              width={70}
+              size={70}
+              color={Colors.secondary}
+              style={styles.progressStyle}
+            />
+            <Text style={styles.pieChartTextStyle}>60 %</Text>
+          </View>
         </View>
         <View style={[styles.mainView, { marginTop: hp("5%") }]}>
           <View style={styles.textView}>
             <Text style={styles.HeadingTextStyle}>Problem Solving</Text>
           </View>
-
-          <Progress.Pie
-            progress={0.9}
-            width={70}
-            size={70}
-            color={Colors.secondary}
-            style={styles.progressStyle}
-          />
+          <View style={styles.pieChartText}>
+            <Progress.Pie
+              progress={0.9}
+              width={70}
+              size={70}
+              color={Colors.secondary}
+              style={styles.progressStyle}
+            />
+            <Text style={styles.pieChartTextStyle}>90 %</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -111,4 +115,13 @@ const styles = StyleSheet.create({
 
     justifyContent: "center",
   },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    right: "30%",
+  },
+  pieChartTextStyle: { fontWeight: "bold", color: Colors.secondary },
 });

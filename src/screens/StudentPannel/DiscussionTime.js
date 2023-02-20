@@ -10,6 +10,8 @@ import {
   Image,
   Alert,
   FlatList,
+  Pressable,
+  Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -56,6 +58,18 @@ const DiscussionTime = () => {
               {`Teacher ` + item.teacherName}
             </Text>
             <Text style={styles.TextStyle}>{`Assign Date: ` + item.date}</Text>
+            <Pressable
+              style={{ alignSelf: "center", flexDirection: "row" }}
+              onPress={() => {
+                Linking.openURL(item.zoomLink);
+              }}
+            >
+              <Text style={styles.TextStyle}>{`Zoom Link `}</Text>
+              <Image
+                source={require("../../../assets/zoom.png")}
+                style={{ width: 50, height: 50 }}
+              />
+            </Pressable>
           </View>
         )}
         keyExtractor={(item) => item.id}
@@ -76,7 +90,7 @@ const styles = StyleSheet.create({
   },
   secondView: {
     width: wp("90%"),
-    height: hp("15%"),
+    height: hp("20%"),
     alignSelf: "center",
     marginTop: 10,
     borderRadius: 20,

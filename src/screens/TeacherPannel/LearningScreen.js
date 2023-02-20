@@ -31,34 +31,42 @@ const LearningScreen = ({ navigation }) => {
         </Text> */}
         <View style={styles.ProgressViewStyle}>
           <View style={styles.textProgressView}>
-            <Progress.Pie
-              progress={0.95}
-              width={100}
-              color={Colors.secondary}
-              size={70}
-              style={styles.progressStyle}
-            />
+            <View style={styles.pieChartText}>
+              <Progress.Pie
+                progress={0.95}
+                width={100}
+                color={Colors.secondary}
+                size={70}
+                style={styles.progressStyle}
+              />
+              <Text style={styles.pieChartTextStyle}>90 %</Text>
+            </View>
             <Text style={styles.HeadingTextStyle}>OverAll Progress</Text>
           </View>
           <View style={styles.textProgressView}>
-            <Progress.Pie
-              progress={0.7}
-              width={100}
-              color={Colors.secondary}
-              size={70}
-              style={styles.progressStyle}
-            />
-
+            <View style={styles.pieChartText}>
+              <Progress.Pie
+                progress={0.7}
+                width={100}
+                color={Colors.secondary}
+                size={70}
+                style={styles.progressStyle}
+              />
+              <Text style={styles.pieChartTextStyle}>70 %</Text>
+            </View>
             <Text style={styles.HeadingTextStyle}>Accuracy</Text>
           </View>
           <View style={styles.textProgressView}>
-            <Progress.Pie
-              progress={0.97}
-              width={100}
-              color={Colors.secondary}
-              size={70}
-              style={styles.progressStyle}
-            />
+            <View style={styles.pieChartText}>
+              <Progress.Pie
+                progress={0.97}
+                width={100}
+                color={Colors.secondary}
+                size={70}
+                style={styles.progressStyle}
+              />
+              <Text style={styles.pieChartTextStyle}>97 %</Text>
+            </View>
             <Text style={styles.HeadingTextStyle}>Current Grade</Text>
           </View>
         </View>
@@ -72,7 +80,10 @@ const LearningScreen = ({ navigation }) => {
             height={hp("6%")}
             onPress={() => Alert.alert("Unit 1 Complete")}
           />
-          <Progress.Pie progress={100} width={50} color={Colors.secondary} />
+          <View style={styles.pieChartText}>
+            <Progress.Pie progress={100} width={50} color={Colors.secondary} />
+            <Text style={styles.pieChartTextStyle}>100 %</Text>
+          </View>
         </View>
         <View style={[styles.mainView, { marginTop: hp("2%") }]}>
           <View style={styles.textView}>
@@ -84,7 +95,10 @@ const LearningScreen = ({ navigation }) => {
             height={hp("6%")}
             onPress={() => Alert.alert("Unit 2 Complete")}
           />
-          <Progress.Pie progress={1} width={50} color={Colors.secondary} />
+          <View style={styles.pieChartText}>
+            <Progress.Pie progress={1} width={50} color={Colors.secondary} />
+            <Text style={styles.pieChartTextStyle}>100 %</Text>
+          </View>
         </View>
         <View style={[styles.mainView, { marginTop: hp("2%") }]}>
           <View style={styles.textView}>
@@ -96,7 +110,10 @@ const LearningScreen = ({ navigation }) => {
             width={wp("30%")}
             height={hp("6%")}
           />
-          <Progress.Pie progress={0.75} width={50} color={Colors.secondary} />
+          <View style={styles.pieChartText}>
+            <Progress.Pie progress={0.75} width={50} color={Colors.secondary} />
+            <Text style={styles.pieChartTextStyle}>75 %</Text>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -139,4 +156,12 @@ const styles = StyleSheet.create({
     width: wp("25%"),
     justifyContent: "center",
   },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  pieChartTextStyle: { fontWeight: "bold", color: Colors.secondary },
 });

@@ -31,6 +31,7 @@ import {
 import { auth, db } from "../../../firebase.config";
 const CreateDiscusionTime = () => {
   const [classTime, setClassTime] = useState("");
+  const [zoomLink, setZoomLink] = useState();
   const [user, setUser] = useState("");
 
   console.log("-============---=", user);
@@ -51,6 +52,7 @@ const CreateDiscusionTime = () => {
       teacherName: user.name,
       task: "Discussion Time",
       discussionTime: classTime,
+      zoomLink,
       date: new Date().toDateString(),
     }).then(() => {
       Alert.alert("Task Assigned");
@@ -70,6 +72,16 @@ const CreateDiscusionTime = () => {
               borderRadius={16}
               value={classTime}
               onChangeText={(value) => setClassTime(value)}
+            />
+          </View>
+          <View style={styles.textInputSubViews}>
+            <TextInputCom
+              text={"Add Zoom Link"}
+              placeholder={"Enter Your Classroom Time"}
+              borderWidth={2}
+              borderRadius={16}
+              value={zoomLink}
+              onChangeText={(value) => setZoomLink(value)}
             />
           </View>
           <PrimaryButton
@@ -94,7 +106,7 @@ const styles = StyleSheet.create({
   },
   SecondContainer: {
     width: wp("90%"),
-    height: hp("40%"),
+    height: hp("50%"),
     borderColor: Colors.secondary,
     borderWidth: 2,
     marginTop: hp("2%"),

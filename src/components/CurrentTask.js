@@ -32,9 +32,12 @@ const screenHeight = Dimensions.get("window").height;
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/core";
 const YourCurrentSchedule = ({ onPress, item }) => {
+  console.log("Zoom Link==============", item);
   const navigation = useNavigation();
   function openUrl() {
-    Linking.openURL("https://zoom.us/");
+    Linking.openURL(
+      item.zoomLink.field1 || field2 || field3 || field4 || field5 || field6
+    );
   }
   return (
     <SafeAreaView>
@@ -59,12 +62,15 @@ const YourCurrentSchedule = ({ onPress, item }) => {
                 source={require("../../assets/zoom.png")}
               />
             </TouchableOpacity>
-            <Progress.Pie
-              progress={0.7}
-              width={30}
-              color={Colors.secondary}
-              size={30}
-            />
+            <View style={styles.pieChartText}>
+              <Progress.Pie
+                progress={0.7}
+                width={30}
+                color={Colors.secondary}
+                size={30}
+              />
+              <Text style={styles.pieChartTextStyle}>70 %</Text>
+            </View>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -133,5 +139,17 @@ const styles = StyleSheet.create({
   textView: {
     width: wp("40%"),
     justifyContent: "center",
+  },
+  pieChartText: {
+    flexDirection: "column",
+    width: wp("10%"),
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+  },
+  pieChartTextStyle: {
+    fontWeight: "bold",
+    color: Colors.secondary,
+    alignSelf: "center",
   },
 });

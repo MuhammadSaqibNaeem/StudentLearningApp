@@ -48,133 +48,128 @@ const TeacherMainStack = () => {
         },
       }}
     >
-{
-
-  user ?
-( <Stack.Group>
- <Stack.Screen
-   name="TeacherHomeScreen"
-   options={{
-     headerShown: true,
-     headerTitle: "Teacher Home Screen",
-     headerTintColor: Colors.secondary,
-     headerTitleAlign: "center",
-     headerLeft: null,
-   }}
-   component={TeacherHomeScreen}
- />
- <Stack.Screen
-   name="LearningScreen"
-   options={{
-     headerShown: true,
-     headerTitle: "Student Learning Progress",
-   }}
-   component={LearningScreen}
- />
- <Stack.Screen
-   name="SocialScreen"
-   options={{
-     headerShown: true,
-     headerTitle: "Student Social Progress",
-   }}
-   component={SocialScreen}
- />
- <Stack.Screen
-   name="CogniticScreen"
-   options={{
-     headerShown: true,
-     headerTitle: "Student Cognitic Progress",
-   }}
-   component={CogniticScreen}
- />
- <Stack.Screen
-   name="UnitScreen"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Unit Screen",
-   }}
-   component={UnitScreen}
- />
- <Stack.Screen
-   name="MessagesScreen"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Messages",
-   }}
-   component={MessagesScreen}
- />
- <Stack.Screen
-   name="RecievedChats"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Messages",
-   }}
-   component={RecievedCommunication}
- />
- <Stack.Screen
-   name="AllStudentAddContent"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Add Content",
-   }}
-   component={AllStudentAddContent}
- />
- <Stack.Screen
-   name="AddNewOfficeTime"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "New Office Time",
-   }}
-   component={AddNewOfficeTime}
- />
- <Stack.Screen
-   name="CreateDiscusionTime"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Create Discussion Time",
-   }}
-   component={CreateDiscusionTime}
- />
- <Stack.Screen
-   name="MessageSelectedStudents"
-   options={{
-     headerShown: true,
-     headerTitleAlign: "center",
-     headerTitle: "Group Message",
-   }}
-   component={MessageSelectedStudents}
- />
- 
-
- </Stack.Group>)
-:
-(<Stack.Group>
-<Stack.Screen
-   name="TeacherLoginScreen"
-   options={{
-     headerShown: false,
-   }}
-   component={TeacherLoginScreen}
- />
- <Stack.Screen
-   name="TeacherSignUpScreen"
-   options={{
-     headerShown: false,
-   }}
-   component={TeacherSignUpScreen}
- />
-</Stack.Group>)
-}
-
-
-    
-    
+      {user ? (
+        <Stack.Group>
+          <Stack.Screen
+            name="TeacherHomeScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Teacher Home Screen",
+              headerTintColor: Colors.secondary,
+              headerTitleAlign: "center",
+              headerLeft: null,
+            }}
+            component={TeacherHomeScreen}
+          />
+          <Stack.Screen
+            name="LearningScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Learning Progress",
+            }}
+            component={LearningScreen}
+          />
+          <Stack.Screen
+            name="SocialScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Social Progress",
+            }}
+            component={SocialScreen}
+          />
+          <Stack.Screen
+            name="CogniticScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Cognitic Progress",
+            }}
+            component={CogniticScreen}
+          />
+          <Stack.Screen
+            name="UnitScreen"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Unit Screen",
+            }}
+            component={UnitScreen}
+          />
+          <Stack.Screen
+            name="MessagesScreen"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Messages",
+            }}
+            component={MessagesScreen}
+          />
+          <Stack.Screen
+            name="RecievedChats"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Messages",
+            }}
+            component={RecievedCommunication}
+          />
+          <Stack.Screen
+            name="AllStudentAddContent"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Add Content",
+            }}
+            component={AllStudentAddContent}
+          />
+          <Stack.Screen
+            name="AddNewOfficeTime"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "New Office Time",
+            }}
+            component={AddNewOfficeTime}
+          />
+          <Stack.Screen
+            name="CreateDiscusionTime"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Create Discussion Time",
+            }}
+            component={CreateDiscusionTime}
+          />
+          <Stack.Screen
+            name="MessageSelectedStudents"
+            options={{
+              headerShown: true,
+              headerTitleAlign: "center",
+              headerTitle: "Cognitive Performance Bas Group Messages",
+              headerTitleStyle: {
+                fontSize: 15,
+              },
+            }}
+            component={MessageSelectedStudents}
+          />
+        </Stack.Group>
+      ) : (
+        <Stack.Group>
+          <Stack.Screen
+            name="TeacherLoginScreen"
+            options={{
+              headerShown: false,
+            }}
+            component={TeacherLoginScreen}
+          />
+          <Stack.Screen
+            name="TeacherSignUpScreen"
+            options={{
+              headerShown: false,
+            }}
+            component={TeacherSignUpScreen}
+          />
+        </Stack.Group>
+      )}
     </Stack.Navigator>
   );
 };
