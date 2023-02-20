@@ -355,7 +355,9 @@ const TeacherHomeScreen = ({ navigation }) => {
                 onChangeText={(value) => searchName(value.toLowerCase())}
               />
             </View>
+            
             <View style={styles.studentsListView}>
+            <Text style={styles.HeadingTextStyle}>All Students</Text>
               {modalVisible ? (
                 <ModalScreen />
               ) : (

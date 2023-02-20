@@ -16,6 +16,9 @@ import ClassContentScreen from "../screens/StudentPannel/ClassContent";
 import TeacherDiscussionTime from "../screens/StudentPannel/DiscussionTime";
 import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
+import RecievedMessages from "../screens/StudentPannel/GroupMessages";
+
+
 const Stack = createStackNavigator();
 const StudentStack = () => {
   const [user, setUser] = useState("");
@@ -121,6 +124,15 @@ user ?  (<Stack.Group>
     headerTitleAlign: "center",
   }}
   component={TeacherDiscussionTime}
+/>
+<Stack.Screen
+  name="RecievedMessages"
+  options={{
+    headerShown: true,
+    headerTitle: "Recieved Messages",
+    headerTitleAlign: "center",
+  }}
+  component={RecievedMessages}
 />
 </Stack.Group>)
 

@@ -16,6 +16,7 @@ import AllStudentAddContent from "../screens/TeacherPannel/AllStudentAddContent"
 import CreateDiscusionTime from "../screens/TeacherPannel/CreateDiscusionTime";
 import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
+import MessageSelectedStudents from "../screens/TeacherPannel/GroupScreen";
 const Stack = createStackNavigator();
 
 const TeacherMainStack = () => {
@@ -139,6 +140,15 @@ const TeacherMainStack = () => {
      headerTitle: "Create Discussion Time",
    }}
    component={CreateDiscusionTime}
+ />
+ <Stack.Screen
+   name="MessageSelectedStudents"
+   options={{
+     headerShown: true,
+     headerTitleAlign: "center",
+     headerTitle: "Group Message",
+   }}
+   component={MessageSelectedStudents}
  />
  
 

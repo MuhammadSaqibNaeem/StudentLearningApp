@@ -123,6 +123,21 @@ const MessagesScreen = ({ navigation }) => {
         </View>
 
       </View>
+      <TouchableOpacity
+style={{top:hp('15%'),width:wp('100%'),alignItems:'center',justifyContent:'flex-end'}}
+  onPress={() => {
+    navigation.navigate("MessageSelectedStudents");
+  }}
+>
+  <Text
+    style={[
+      styles.textStyle,
+      { fontSize: 20, color: Colors.background,padding:10,borderRadius:10,backgroundColor:Colors.secondary },
+    ]}
+  >
+   Send A Group Message
+  </Text>
+</TouchableOpacity>
     </View>
   );
 };

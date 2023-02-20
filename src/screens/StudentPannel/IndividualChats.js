@@ -215,7 +215,21 @@ style={styles.viewMessagesButton}
         </View>
 
       </View>
-      
+      <TouchableOpacity
+style={{top:hp('15%'),width:wp('100%'),alignItems:'center',justifyContent:'flex-end'}}
+  onPress={() => {
+    navigation.navigate("RecievedMessages");
+  }}
+>
+  <Text
+    style={[
+      styles.textStyle,
+      { fontSize: 20, color: Colors.secondary,borderRadius:10, },
+    ]}
+  >
+  View Group Messages
+  </Text>
+</TouchableOpacity>
     </View>
   );
 };
