@@ -29,7 +29,7 @@ import {
   FlatList,
   AsyncStorage,
   ToastAndroid,
-  Platform
+  Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import Colors from "../../../assets/theme/Colors";
@@ -77,8 +77,6 @@ const TeacherHomeScreen = ({ navigation }) => {
       setUser(docSnap.data());
       AsyncStorage.setItem("TeacherName", docSnap.data().name).then(() => {
         AsyncStorage.setItem("TeacherSubject", docSnap.data().subjectName);
-
-        console.log("datatatata====================", docSnap.data());
       });
     }
   };
@@ -87,29 +85,6 @@ const TeacherHomeScreen = ({ navigation }) => {
     profileData();
   }, []);
   /////UserName From Firebase/////
-
-  // const [data, setData] = useState([]);
-  // const [filterData, setFilterData] = useState([]);
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const usersCollection = await firestore()
-  //       .collection("studentData")
-  //       .onSnapshot((querySnapshot) => {
-  //         const search = [];
-  //         setSearch(search);
-  //         const document = [];
-  //         querySnapshot.forEach((doc) => {
-  //           document.push(doc.data());
-  //           search.push(doc.data());
-  //         });
-
-  //         setData(document);
-  //         setFilterData(document);
-  //       });
-  //   };
-  //   getData();
-  // }, []);
 
   const searchName = (value) => {
     if (value == "") {
@@ -167,22 +142,15 @@ const TeacherHomeScreen = ({ navigation }) => {
     );
   };
   const logOut = () => {
-    
-    auth.signOut().then(()=>{
-      AsyncStorage.removeItem('UserType').then(()=>{
-          
+    auth.signOut().then(() => {
+      AsyncStorage.removeItem("UserType").then(() => {
         Platform.OS === "ios"
           ? Alert.alert("Logged Out Sucess")
-          : ToastAndroid.show(
-              "Logged Out Sucess",
-              ToastAndroid.SHORT
-            );
-            
-      
-            navigation.navigate('WelcomeScreen')
-          })
-    })
-   
+          : ToastAndroid.show("Logged Out Sucess", ToastAndroid.SHORT);
+
+        navigation.navigate("WelcomeScreen");
+      });
+    });
   };
 
   const ModalScreen = () => {
@@ -362,40 +330,36 @@ const TeacherHomeScreen = ({ navigation }) => {
                 <ModalScreen />
               ) : (
                 <View>
-                 {
-                 !data &&
-                 <Text>No Students Yet</Text>}
+                  {!data && <Text>No Students Yet</Text>}
 
-                {data && <FlatList
-                    data={filterData}
-                    renderItem={({ item }) => {
-                      return (
-                        <TouchableOpacity
-                        style={styles.StudentSelectButton}
-                          onPress={() => {
-                            setStudentDetails(item);
-                          }}
-                        >
-                          <Text
-                            style={{
-                              fontSize: 18,
-                              fontWeight: "bold",
-                              color: Colors.background,
+                  {data && (
+                    <FlatList
+                      data={filterData}
+                      renderItem={({ item }) => {
+                        return (
+                          <TouchableOpacity
+                            style={styles.StudentSelectButton}
+                            onPress={() => {
+                              setStudentDetails(item);
                             }}
                           >
-                            {item.name}
-                          </Text>
-                        </TouchableOpacity>
-                      );
-                    }}
-                    keyExtractor={(item) => {
-                      return item.uid;
-                    }}
-                  />}
-                  
-                
-                  
-                  
+                            <Text
+                              style={{
+                                fontSize: 18,
+                                fontWeight: "bold",
+                                color: Colors.background,
+                              }}
+                            >
+                              {item.name}
+                            </Text>
+                          </TouchableOpacity>
+                        );
+                      }}
+                      keyExtractor={(item) => {
+                        return item.uid;
+                      }}
+                    />
+                  )}
                 </View>
               )}
             </View>
@@ -494,5 +458,13 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: Colors.secondary,
   },
-  StudentSelectButton:{padding:5,marginVertical:5,alignItems:'center',borderRadius:5,justifyContent:'center',elevation:5,backgroundColor:Colors.secondary}
+  StudentSelectButton: {
+    padding: 5,
+    marginVertical: 5,
+    alignItems: "center",
+    borderRadius: 5,
+    justifyContent: "center",
+    elevation: 5,
+    backgroundColor: Colors.secondary,
+  },
 });
