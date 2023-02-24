@@ -144,14 +144,14 @@ const TaskListScreen = ({ route }) => {
                 width={wp("60%")}
               />
             )}
-            <View style={{ marginTop: "1%" }}>
-              <WebView
-                style={styles.container}
-                source={{
-                  uri: "https://m.youtube.com/results?sp=mAEA&search_query=mitosis ",
-                }}
-              />
-            </View>
+            {/* <View style={{ marginTop: "1%" }}> */}
+            <WebView
+              style={styles.container}
+              source={{
+                uri: "https://m.youtube.com/results?sp=mAEA&search_query=mitosis ",
+              }}
+            />
+            {/* </View> */}
           </View>
         ) : null}
       </View>
