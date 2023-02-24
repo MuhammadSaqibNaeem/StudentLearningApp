@@ -9,7 +9,9 @@ import {
   Dimensions,
   Image,
   Alert,
+  Pressable,
   FlatList,
+  Linking,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -56,6 +58,20 @@ const ClassContent = () => {
               {`Teacher ` + item.teacherName}
             </Text>
             <Text style={styles.TextStyle}>{`Assign Date  ` + item.date}</Text>
+            <Pressable
+              style={{ alignSelf: "center", flexDirection: "row" }}
+              onPress={() => {
+                Linking.openURL(item.assignmentLink);
+              }}
+            >
+              <Text style={styles.TextStyle}>
+                {`${item.addContent}` + ` Assignment Link`}
+              </Text>
+              <Image
+                source={require("../../../assets/Link.png")}
+                style={{ width: 50, height: 50, left: 5, tintColor: "white" }}
+              />
+            </Pressable>
           </View>
         )}
         keyExtractor={(item) => item.id}
@@ -76,7 +92,7 @@ const styles = StyleSheet.create({
   },
   secondView: {
     width: wp("90%"),
-    height: hp("15%"),
+    height: hp("20%"),
     alignSelf: "center",
     marginTop: 10,
     borderRadius: 20,

@@ -56,6 +56,8 @@ const AllStudentAddContent = ({ navigation }) => {
     addDoc(dbref, {
       teacherName: user?.name,
       addContent,
+      assignmentLink:
+        "https://drive.google.com/file/d/1fxv-AtkycP_XENUDisrFoBN1fmtLhG7a/view?usp=drivesdk",
       date: new Date().toDateString(),
     }).then(() => {
       Alert.alert("Unit Assigned");

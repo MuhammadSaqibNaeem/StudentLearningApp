@@ -18,7 +18,6 @@ import { auth } from "../../firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 import RecievedMessages from "../screens/StudentPannel/GroupMessages";
 
-
 const Stack = createStackNavigator();
 const StudentStack = () => {
   const [user, setUser] = useState("");
@@ -49,118 +48,106 @@ const StudentStack = () => {
         },
       }}
     >
-      
-      
-      {
-
-user ?  (<Stack.Group>
- 
-<Stack.Screen
-  name="StudentHomeScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Teacher Home Screen",
-    headerTintColor: Colors.secondary,
-    headerTitleAlign: "center",
-    headerLeft: null,
-  }}
-  component={StudentHomeScreen}
-/>
-<Stack.Screen
-  name="IndividualRecievedMessagesScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Student Communication",
-  }}
-  component={IndividualRecievedMessagesScreen}
-/>
-<Stack.Screen
-  name="IndividualStudentMessagesScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Student Communication",
-  }}
-  component={IndividualStudentMessagesScreen}
-/>
-<Stack.Screen
-  name="StudentMessagesScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Student Communication",
-  }}
-  component={StudentMessagesScreen}
-/>
-<Stack.Screen
-  name="YourCurrentSchedule"
-  options={{
-    headerShown: true,
-    headerTitle: "Current Schedule",
-  }}
-  component={YourCurrentSchedule}
-/>
-<Stack.Screen
-  name="TaskListScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Task List",
-    headerTitleAlign: "center",
-  }}
-  component={TaskListScreen}
-/>
-<Stack.Screen
-  name="ClassContentScreen"
-  options={{
-    headerShown: true,
-    headerTitle: "Class Assignment",
-    headerTitleAlign: "center",
-  }}
-  component={ClassContentScreen}
-/>
-<Stack.Screen
-  name="TeacherDiscussionTime"
-  options={{
-    headerShown: true,
-    headerTitle: "Discussion Time",
-    headerTitleAlign: "center",
-  }}
-  component={TeacherDiscussionTime}
-/>
-<Stack.Screen
-  name="RecievedMessages"
-  options={{
-    headerShown: true,
-    headerTitle: "Recieved Messages",
-    headerTitleAlign: "center",
-  }}
-  component={RecievedMessages}
-/>
-</Stack.Group>)
-
-:
-
-( <Stack.Group>
- <Stack.Screen
-   name="StudentLoginScreen"
-   options={{
-     headerShown: false,
-   }}
-   component={StudentLoginScreen}
- />
- <Stack.Screen
-   name="StudentSignUpScreen"
-   options={{
-     headerShown: false,
-   }}
-   component={StudentSignUpScreen}
- />
- </Stack.Group>
-)
-
-
-
-      }
-      
-     
+      {user ? (
+        <Stack.Group>
+          <Stack.Screen
+            name="StudentHomeScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Home Screen",
+              headerTintColor: Colors.secondary,
+              headerTitleAlign: "center",
+              headerLeft: null,
+            }}
+            component={StudentHomeScreen}
+          />
+          <Stack.Screen
+            name="IndividualRecievedMessagesScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Communication",
+            }}
+            component={IndividualRecievedMessagesScreen}
+          />
+          <Stack.Screen
+            name="IndividualStudentMessagesScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Communication",
+            }}
+            component={IndividualStudentMessagesScreen}
+          />
+          <Stack.Screen
+            name="StudentMessagesScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Student Communication",
+            }}
+            component={StudentMessagesScreen}
+          />
+          <Stack.Screen
+            name="YourCurrentSchedule"
+            options={{
+              headerShown: true,
+              headerTitle: "Current Schedule",
+            }}
+            component={YourCurrentSchedule}
+          />
+          <Stack.Screen
+            name="TaskListScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Task List",
+              headerTitleAlign: "center",
+            }}
+            component={TaskListScreen}
+          />
+          <Stack.Screen
+            name="ClassContentScreen"
+            options={{
+              headerShown: true,
+              headerTitle: "Class Assignment",
+              headerTitleAlign: "center",
+            }}
+            component={ClassContentScreen}
+          />
+          <Stack.Screen
+            name="TeacherDiscussionTime"
+            options={{
+              headerShown: true,
+              headerTitle: "Discussion Time",
+              headerTitleAlign: "center",
+            }}
+            component={TeacherDiscussionTime}
+          />
+          <Stack.Screen
+            name="RecievedMessages"
+            options={{
+              headerShown: true,
+              headerTitle: "Recieved Messages",
+              headerTitleAlign: "center",
+            }}
+            component={RecievedMessages}
+          />
+        </Stack.Group>
+      ) : (
+        <Stack.Group>
+          <Stack.Screen
+            name="StudentLoginScreen"
+            options={{
+              headerShown: false,
+            }}
+            component={StudentLoginScreen}
+          />
+          <Stack.Screen
+            name="StudentSignUpScreen"
+            options={{
+              headerShown: false,
+            }}
+            component={StudentSignUpScreen}
+          />
+        </Stack.Group>
+      )}
     </Stack.Navigator>
   );
 };

@@ -35,9 +35,25 @@ const YourCurrentSchedule = ({ onPress, item }) => {
   console.log("Zoom Link==============", item);
   const navigation = useNavigation();
   function openUrl() {
-    Linking.openURL(
-      item.zoomLink.field1 || field2 || field3 || field4 || field5 || field6
-    );
+    if (
+      item.zoomLink.field1 ||
+      item.zoomLink.field2 ||
+      item.zoomLink.field3 ||
+      item.zoomLink.field4 ||
+      item.zoomLink.field5 ||
+      item.zoomLink.field6 != ""
+    ) {
+      Linking.openURL(
+        item.zoomLink.field1 ||
+          item.zoomLink.field2 ||
+          item.zoomLink.field3 ||
+          item.zoomLink.field4 ||
+          item.zoomLink.field5 ||
+          item.zoomLink.field6
+      );
+    } else {
+      Alert.alert("Sorry There is no Zoom Meeting Link");
+    }
   }
   return (
     <SafeAreaView>
